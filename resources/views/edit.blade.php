@@ -47,7 +47,7 @@
                     <input type="text" name="user" class="form-control m-2" placeholder="" value="{{ Auth::user()->name }}" readonly>
                     <input type="file" id="input-file-now-custom-3" class="form-control m-2" name="images[]" multiple>
                     <button type="submit" class="btn btn-success m-2 ">Submit</button>
-                    <a class="btn btn-secondary m-2" href="/" role="button">Batal</a>
+                    <a class="btn btn-secondary m-2" href="{{ url()->previous() }}" role="button">Batal</a>
                 </form>
             </div>
         </div>

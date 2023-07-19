@@ -11,8 +11,7 @@ class Postcontroller extends Controller
 {
     public function index()
     {
-        $posts=Post::all();
-        return view('index',compact('posts'));
+        return view('index');
     }
 
     public function create()
@@ -139,7 +138,7 @@ class Postcontroller extends Controller
             ->orWhere('nama','like',"%$search%")
             ->orWhere('user','like',"%$search%")
             ->orWhere('kunjungan','like',"%$search%");
-            })->get();
+            })->paginate(10);
             
             return view('search',compact('posts','search'));
     }
