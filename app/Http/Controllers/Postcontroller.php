@@ -69,6 +69,12 @@ class Postcontroller extends Controller
         return view('edit')->with('posts',$posts);
     }
 
+    public function view($id)
+    {
+        $posts=Post::findOrFail($id);
+        return view('view')->with('posts',$posts);
+    }
+
     public function update(Request $request, $id)
     {
         $post = Post::findOrFail($id);

@@ -11,10 +11,9 @@
                 <div class="col-12 text-center">
                     <h2><a href="{{ url('/create') }}" class="btn btn-success btn-sm wave-effect" title="Tambah Dokumen">Tambah Dokumen</a></h2>
                 </div>
-             </div>
-            <br><br>
+            </div>
             <div class="card-body row py-2">
-                <div class="col-6 offset-3 text-center">
+                <div class="col-8 offset-2 text-center">
                     <div class="form-group">
                         <form method="get" action="/search">
                             <div class="input-group">

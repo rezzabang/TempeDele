@@ -36,4 +36,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::post('/register', [\App\Http\Controllers\AuthController::class, 'registerPost'])->name('register');
     Route::delete('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
     Route::get('/search',[\App\Http\Controllers\Postcontroller::class,'search']);
+    Route::get('/view/{id}',[\App\Http\Controllers\Postcontroller::class,'view']);
 });

@@ -37,7 +37,7 @@
                                 <tbody>
                                     @foreach ($posts as $post)
                                     <tr>
-                                        <th scope="row">{{ $post->nocm }}</th>
+                                        <th scope="row"><a href="/view/{{ $post->id }}">{{ $post->nocm }}</a></th>
                                         <td>{{ $post->nama }}</td>
                                         <td>{{ $post->kunjungan }}</td>
                                         <td>{{ $post->user }}</td>
@@ -59,8 +59,8 @@
                 </div>                  
             </div>
           <div class="d-flex justify-content-center">
-		{{ $posts->links() }}
-	  </div>
+                {{ $posts->links() }}
+          </div>
         </div>
     </div>
 </div>
