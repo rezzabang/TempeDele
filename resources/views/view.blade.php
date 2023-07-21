@@ -31,13 +31,11 @@
                @endif  
             </div>
             <div class="card-body">
-                <form action="/update/{{ $posts->id }}" method="post" enctype="multipart/form-data">
-                    @csrf
-                    @method("put")
-                    <input type="text" name="nocm" class="form-control m-2" placeholder="Nomor Rekam medis" value="{{ $posts->nocm }}">
-                    <input type="text" name="nama" class="form-control m-2" placeholder="Nama Pasien" value="{{ $posts->nama }}">
-                    <input type="date" name="kunjungan" class="form-control m-2" placeholder="Tanggal Kunjungan Pasien" value="{{ $posts->kunjungan }}">
-                    <input type="text" name="user" class="form-control m-2" placeholder="" value="{{ $posts->nama }}" readonly>
+                <form>
+                    <input type="text" name="nocm" class="form-control m-2" placeholder="Nomor Rekam medis" value="{{ $posts->nocm }}" readonly>
+                    <input type="text" name="nama" class="form-control m-2" placeholder="Nama Pasien" value="{{ $posts->nama }}" readonly>
+                    <input type="date" name="kunjungan" class="form-control m-2" placeholder="Tanggal Kunjungan Pasien" value="{{ $posts->kunjungan }}" readonly>
+                    <input type="text" name="user" class="form-control m-2" placeholder="" value="{{ $posts->user }}" readonly>
                     <a class="btn btn-secondary m-2" href="{{ url()->previous() }}" role="button">Kembali</a>
                 </form>
             </div>
