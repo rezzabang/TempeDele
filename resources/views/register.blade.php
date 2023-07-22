@@ -20,6 +20,13 @@
                             {{ Session::get('success') }}
                         </div>
                     @endif
+                    @if ($errors->any())
+                    <div class="alert alert-danger text-center">
+                            @foreach ($errors->all() as $error)
+                                <label class="text-center">{{ $error }}</label>
+                            @endforeach
+                    </div>
+                    @endif
                     <form action="{{ route('register') }}" method="POST">
                         @csrf
                         <div class="mb-3">
@@ -34,10 +41,9 @@
                             <label for="password" class="form-label">Password</label>
                             <input type="password" name="password" class="form-control" id="password" required>
                         </div>
-                        <div class="mb-3">
-                            <div class="d-grid">
-                                <button class="btn btn-primary">Daftar</button>
-                            </div>
+                        <div class="d-flex justify-content-center">
+                            <button class="btn btn-primary m-2">Daftar</button>
+                            <a class="btn btn-secondary m-2" href="{{ url()->previous() }}" role="button">Batal</a>
                         </div>
                     </form>
                 </div>
