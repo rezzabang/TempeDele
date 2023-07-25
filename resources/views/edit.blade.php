@@ -1,8 +1,8 @@
 @extends('layout')
 
 @section('content')
-<div class="row">
-    <div class="col-12">
+<div class="row justify-content-center">
+    <div class="col-10">
         <div class="card">
             <div class="card-header">
                 <h2>Edit Dokumen Terupload</h2>
@@ -41,11 +41,30 @@
                 <form action="/update/{{ $posts->id }}" method="post" enctype="multipart/form-data">
                     @csrf
                     @method("put")
+                    <label class="m-1" for="nocm">No Rekam Medis:</label>
                     <input type="text" name="nocm" class="form-control m-2" placeholder="Nomor Rekam medis" value="{{ $posts->nocm }}">
+                    <label class="m-1" for="nama">Nama Pasien:</label>
                     <input type="text" name="nama" class="form-control m-2" placeholder="Nama Pasien" value="{{ $posts->nama }}">
-                    <input type="date" name="kunjungan" class="form-control m-2" placeholder="Tanggal Kunjungan Pasien" value="{{ $posts->kunjungan }}">
+                    <label class="m-1" for="rawat">Jenis Pelayanan:</label>
+                    <select class="form-control m-2" name="pelayanan" value="{{ $posts->pelayanan }}">
+                        <option value="Rawat Inap">Rawat Inap</option>
+                        <option value="Rawat Jalan">Rawat Jalan</option>
+                    </select>
+                    <label class="m-1" for="kunjungan">Tanggal Kunjungan:</label>
+                    <input type="text" name="kunjungan" class="form-control m-2" placeholder="Tanggal Kunjungan Pasien" value="{{ $posts->kunjungan }}">
+                    <label class="m-1" for="user">Petugas:</label>
                     <input type="text" name="user" class="form-control m-2" placeholder="" value="{{ Auth::user()->name }}" readonly>
-                    <input type="file" id="input-file-now-custom-3" class="form-control m-2" name="images[]" multiple>
+                    <label class="m-1">Dokumen:</label>
+                    <div id="show_item" class="m-2">
+                        <div class="row">
+                            <div class="col-8">
+                                <input type="file" class="form-control input-file-now-custom" name="images[]" multiple>
+                            </div>
+                            <div class="col-3">
+                                <button class="btn btn-primary add_item_btn">+ Gambar</button>
+                            </div>
+                        </div>
+                    </div>
                     <button type="submit" class="btn btn-success m-2 ">Submit</button>
                     <a class="btn btn-secondary m-2" href="{{ url()->previous() }}" role="button">Batal</a>
                 </form>

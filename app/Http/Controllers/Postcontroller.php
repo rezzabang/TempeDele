@@ -1,11 +1,16 @@
 <?php
 
 namespace App\Http\Controllers;
+
+use App\Exports\LaporanExport;
 use App\Models\Image;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
+use Maatwebsite\Excel\Facades\Excel;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\Session;
 
 class Postcontroller extends Controller
 {
@@ -25,7 +30,8 @@ class Postcontroller extends Controller
             "nocm" =>$request->nocm,
             "user" =>$request->user,
             "nama" =>$request->nama,
-            "kunjungan" =>$request->kunjungan,
+            "pelayanan" => $request->pelayanan,
+            "kunjungan" =>str_replace([' ', '-', ], '/', $request->kunjungan),
         ]);
        $post->save();
 
@@ -83,7 +89,8 @@ class Postcontroller extends Controller
             "nocm" => $request->nocm,
             "user" => $request->user,
             "nama" => $request->nama,
-            "kunjungan" => $request->kunjungan,
+            "pelayanan" => $request->pelayanan,
+            "kunjungan" => str_replace([' ', '-', ], '/', $request->kunjungan),
         ]);
 
         if ($request->hasFile("images")) {
@@ -135,17 +142,28 @@ class Postcontroller extends Controller
     }
 
     public function search(Request $request){
-
+        
         $search = $request->search;
-
-        $posts =Post::where(function($query) use ($search){
+        session(['search' => $search]);
+        $posts = Post::where(function($query) use ($search){
 
             $query->where('nocm','like',"%$search%")
             ->orWhere('nama','like',"%$search%")
             ->orWhere('user','like',"%$search%")
+            ->orWhere('pelayanan','like',"%$search%")
             ->orWhere('kunjungan','like',"%$search%");
             })->paginate(10);
             
             return view('search',compact('posts','search'));
+    }
+
+
+
+    public function exportLaporan(Request $request)
+    {
+        $search = session('search');
+        $request->session()->forget('search');
+        $fileName = 'Laporan_' . Carbon::now()->format('Ymd') . '.xlsx';
+        return (new LaporanExport($search))->download($fileName);
     }
 }

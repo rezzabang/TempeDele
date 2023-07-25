@@ -13,6 +13,7 @@ class Post extends Model
         'nocm',
         'nama',
         'kunjungan',
+        'pelayanan',
         'user',
     ];
  

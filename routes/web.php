@@ -41,4 +41,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::get('/edituser/{id}',[\App\Http\Controllers\AuthController::class,'edituser']);
     Route::delete('/deleteuser/{id}',[\App\Http\Controllers\AuthController::class,'deleteuser']);
     Route::put('/updateuser/{id}',[\App\Http\Controllers\AuthController::class,'updateuser'])->name('updateuser');
+    Route::get('/exportLaporan',[\App\Http\Controllers\Postcontroller::class,'exportLaporan']);
 });

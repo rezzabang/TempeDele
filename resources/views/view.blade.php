@@ -1,8 +1,8 @@
 @extends('layout')
 
 @section('content')
-<div class="row">
-    <div class="col-12">
+<div class="row justify-content-center">
+    <div class="col-10">
         <div class="card">
             <div class="card-header text-center">
                 <h2><strong>Preview Dokumen</strong></h2>
@@ -32,9 +32,15 @@
             </div>
             <div class="card-body">
                 <form>
+                    <label class="m-1" for="nocm">No Rekam Medis:</label>
                     <input type="text" name="nocm" class="form-control m-2" placeholder="Nomor Rekam medis" value="{{ $posts->nocm }}" readonly>
+                    <label class="m-1" for="nama">Nama Pasien:</label>
                     <input type="text" name="nama" class="form-control m-2" placeholder="Nama Pasien" value="{{ $posts->nama }}" readonly>
-                    <input type="date" name="kunjungan" class="form-control m-2" placeholder="Tanggal Kunjungan Pasien" value="{{ $posts->kunjungan }}" readonly>
+                    <label class="m-1" for="rawat">Jenis Perawatan:</label>
+                    <input type="text" name="pelayanan" class="form-control m-2" placeholder="Jenis Pelayanan" value="{{ $posts->pelayanan }}" readonly>
+                    <label class="m-1" for="kunjungan">Tanggal Kunjungan:</label>
+                    <input type="text" name="kunjungan" class="form-control m-2" placeholder="Tanggal Kunjungan Pasien" value="{{ $posts->kunjungan }}" readonly>
+                    <label class="m-1" for="user">Petugas:</label>
                     <input type="text" name="user" class="form-control m-2" placeholder="" value="{{ $posts->user }}" readonly>
                     <a class="btn btn-secondary m-2" href="{{ url()->previous() }}" role="button">Kembali</a>
                 </form>
