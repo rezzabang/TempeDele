@@ -30,7 +30,7 @@
                                     <input type="file" class="form-control input-file-now-custom" name="images[]" multiple>
                                 </div>
                                 <div class="col-3">
-                                    <button class="btn btn-primary add_item_btn">+ Gambar</button>
+                                    <button class="btn btn-primary add_item_btn">+</button>
                                 </div>
                             </div>
                         </div>

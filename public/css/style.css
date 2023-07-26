@@ -4,6 +4,15 @@
     100% { transform: scale(1); }
 }
 
+.container {
+    padding-top:20px;
+}
+
+.containert {
+    padding-top:30px;
+    padding-bottom: 20px;
+}
+
 .wave-effect {
     position: relative;
     overflow: hidden;
@@ -30,7 +39,9 @@
     opacity: 1;
     animation-play-state: paused;
 }
-.strong-arm {
-color: #bcc304; /* Green color for the strong-arm icon */
-font-size: 20px; /* Adjust the font size as needed */
+
+hr {
+    border: none;
+    height: 3px;
+    background-color: #000000;
 }

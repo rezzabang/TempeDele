@@ -5,7 +5,7 @@
     <div class="col-12">
         <div class="card">
             <div class="card-header text-center">
-              <h2>Scan Dokumen Rekam Medis</h2>
+              <h2>Pencarian Dokumen</h2>
             </div>
               <div class="card-body row py-2">
                   <div class="col-md-12">
@@ -62,7 +62,7 @@
                 </div>                  
             </div>
             <div class="row justify-content-between">
-                <div class="col-md-4 mx-auto text-center">
+                <div class="col-md-4 mx-auto text-center mb-2">
                     {{ $posts->links() }}
                 </div>
                 <div class="col-md-4 mx-auto text-center">

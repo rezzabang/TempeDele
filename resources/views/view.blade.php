@@ -8,7 +8,6 @@
                 <h2><strong>Preview Dokumen</strong></h2>
             </div>
             <div class="text-center">
-                {{-- <h3>Preview Dokumen</h3> --}}
                 @if (count($posts->images) > 0)
                     <div class="d-flex flex-wrap justify-content-center align-items-center mt-2">
                         @foreach ($posts->images as $img)
@@ -17,7 +16,6 @@
                             </div>
                         @endforeach
                     </div>
-                    <!-- Modal -->
                     <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">              

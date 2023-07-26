@@ -8,7 +8,7 @@ use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\Exportable;
 use Maatwebsite\Excel\Concerns\WithMapping;
 
-class LaporanExport implements FromQuery, WithHeadings, WithMapping
+class LaporanExport implements FromQuery, WithHeadings
 {
     /**
     * @return \Illuminate\Support\Collection
@@ -23,7 +23,7 @@ class LaporanExport implements FromQuery, WithHeadings, WithMapping
 
     public function query()
     {
-         return Post::where(function ($query) {
+        $post = Post::where(function ($query) {
             if ($this->search) {
                 $query->where('nocm', 'like', '%' . $this->search . '%')
                       ->orWhere('nama', 'like', '%' . $this->search . '%')
@@ -32,29 +32,12 @@ class LaporanExport implements FromQuery, WithHeadings, WithMapping
             }
         })
         ->select("user", "nocm", "nama", "kunjungan", "created_at", "updated_at");
+        return $post;
     }
-
-    // public function map($invoice): array
-    // {
-    //     // This example will return 3 rows.
-    //     // First row will have 2 column, the next 2 will have 1 column
-    //     return [
-    //         [
-    //             $invoice->invoice_number,
-    //         ],
-    //         [
-    //             $invoice->lines->first()->description,
-    //         ],
-    //         [
-    //             $invoice->lines->last()->description,
-    //         ]
-    //     ];
-    // }
 
     public function headings(): array
     {
         return [
-            'No',
             'Petugas',
             'No RM',
             'Nama Pasien',

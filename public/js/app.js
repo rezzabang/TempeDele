@@ -47,8 +47,3 @@ $('.pop').ready(function() {
             $(row_item).remove();
         });
     });
-
-    flatpickr(".datepicker", {
-        dateFormat: "d-m-Y",
-        allowInput: true,
-    });
