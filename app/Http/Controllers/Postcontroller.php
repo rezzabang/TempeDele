@@ -39,10 +39,9 @@ class Postcontroller extends Controller
             $files = $request->file("images");
 
             foreach ($files as $file) {
-                $originalName = $file->getClientOriginalName();
                 $extension = $file->getClientOriginalExtension();
                 $imageName = $request->kunjungan . $request->nocm . '.' . $extension;
-                $imageName = str_replace('-', ' ','/', $imageName);
+                $imageName = str_replace(['/','-'],'', $imageName);
                 $imageName = $this->makeUniqueImageName($imageName);
                 $file->storeAs('public/post-img/', $imageName);
                 $validatedData['image'] = $imageName;
@@ -95,10 +94,9 @@ class Postcontroller extends Controller
 
         if ($request->hasFile("images")) {
             $files = $request->file("images");
-
             foreach ($files as $file) {
-                $originalName = $file->getClientOriginalName();
-                $imageName = str_replace([' ', '-','/' ], '', $request->kunjungan) . '_' . Str::slug(pathinfo($originalName, PATHINFO_FILENAME)) . '.' . $file->getClientOriginalExtension();
+                $imageName = str_replace(['', '-','/' ], '', $request->kunjungan) . $request->nocm . '.' . $file->getClientOriginalExtension();
+                $imageName = $this->makeUniqueImageName($imageName);
                 $file->storeAs('public/post-img/', $imageName);
                 $validatedData['image'] = $imageName;
                 $validatedData['post_id'] = $post->id;
