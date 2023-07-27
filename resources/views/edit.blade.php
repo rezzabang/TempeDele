@@ -8,7 +8,6 @@
                 <h2>Edit Dokumen Terupload</h2>
             </div>
             <div class="text-center">
-                {{-- <h3>Preview Dokumen</h3> --}}
                 @if (count($posts->images) > 0)
                     <div class="d-flex flex-wrap justify-content-center align-items-center mt-2">
                         @foreach ($posts->images as $img)
@@ -24,7 +23,6 @@
                             </div>
                         @endforeach
                     </div>
-                    <!-- Modal -->
                     <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
                             <div class="modal-content">              
@@ -39,19 +37,31 @@
             </div>
             <div class="card-body">
                 <form action="/update/{{ $posts->id }}" method="post" enctype="multipart/form-data">
+                    @if($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
                     @csrf
                     @method("put")
                     <label class="m-1" for="nocm">No Rekam Medis:</label>
-                    <input type="text" name="nocm" class="form-control m-2" placeholder="Nomor Rekam medis" value="{{ $posts->nocm }}">
+                    <input type="text" id= "cmInput" name="nocm" class="form-control m-2" placeholder="Nomor Rekam medis" value="{{ $posts->nocm }}">
+                    <p class="m-2" id="warningMessage" style="color: red; margin-top: 5px;"></p>
                     <label class="m-1" for="nama">Nama Pasien:</label>
                     <input type="text" name="nama" class="form-control m-2" placeholder="Nama Pasien" value="{{ $posts->nama }}">
                     <label class="m-1" for="rawat">Jenis Pelayanan:</label>
-                    <select class="form-control m-2" name="pelayanan" value="{{ $posts->pelayanan }}">
+                    <select class="form-control m-2" name="pelayanan">
+                        <option value="{{ $posts->pelayanan }}" class="pilihan" disabled selected>{{ $posts->pelayanan }}</option>
                         <option value="Rawat Inap">Rawat Inap</option>
                         <option value="Rawat Jalan">Rawat Jalan</option>
                     </select>
                     <label class="m-1" for="kunjungan">Tanggal Kunjungan:</label>
-                    <input type="text" name="kunjungan" class="form-control m-2" placeholder="Tanggal Kunjungan Pasien" value="{{ $posts->kunjungan }}">
+                    <input type="text" id="kunjunganInput" name="kunjungan" class="form-control m-2" placeholder="Tanggal Kunjungan Pasien" value="{{ $posts->kunjungan }}">
+                    <p class="m-2" id="errorKunjungan" style="color: red; margin-top: 5px;"></p>
                     <label class="m-1" for="user">Petugas:</label>
                     <input type="text" name="user" class="form-control m-2" placeholder="" value="{{ Auth::user()->name }}" readonly>
                     <label class="m-1">Dokumen:</label>

@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Validator;
 
 class Postcontroller extends Controller
 {
@@ -24,16 +25,71 @@ class Postcontroller extends Controller
         return view('create');
     }
 
+    // public function store(Request $request)
+    // {
+    //     $post =new Post([
+    //         "nocm" =>$request->nocm,
+    //         "user" =>$request->user,
+    //         "nama" =>$request->nama,
+    //         "pelayanan" => $request->pelayanan,
+    //         "kunjungan" =>$request->kunjungan,
+    //     ]);
+    //    $post->save();
+
+    //     if ($request->hasFile("images")) {
+    //         $files = $request->file("images");
+
+    //         foreach ($files as $file) {
+    //             $extension = $file->getClientOriginalExtension();
+    //             $imageName = $request->kunjungan . $request->nocm . '.' . $extension;
+    //             $imageName = str_replace(['/','-'],'', $imageName);
+    //             $imageName = $this->makeUniqueImageName($imageName);
+    //             $file->storeAs('public/post-img/', $imageName);
+    //             $validatedData['image'] = $imageName;
+    //             $validatedData['post_id'] = $post->id;
+
+    //             Image::create($validatedData);
+    //         }
+    //     }
+
+    //     return redirect("/");
+    // }
+
     public function store(Request $request)
     {
-        $post =new Post([
-            "nocm" =>$request->nocm,
-            "user" =>$request->user,
-            "nama" =>$request->nama,
+    $rules = [
+        'nocm' => 'required|string|size:8',
+        'nama' => 'required',
+        'pelayanan' => 'required|not_in:Silahkan pilih..',
+        'kunjungan' => 'required|string|size:10',
+    ];
+
+    $messages = [
+        'nocm.required' => 'Nomor CM harus diisi.',
+        'nocm.string' => 'Nomor CM harus berupa karakter.',
+        'nocm.size' => 'Nomor CM harus terdiri dari 8 karakter.',
+        'nama.required' => 'Nama harus diisi.',
+        'pelayanan.required' => 'Jenis Pelayanan harus dipilih.',
+        'pelayanan.not_in' => 'Jenis Pelayanan harus dipilih.',
+        'kunjungan.required' => 'Tanggal kunjungan harus diisi.',
+        'kunjungan.string' => 'Tanggal kunjungan harus diisi.',
+        'kunjungan.size' => 'Tanggal kunjungan harus sesuai (dd/mm/yyyy).',
+    ];
+
+    $validator = Validator::make($request->all(), $rules, $messages);
+
+    if ($validator->fails()) {
+        return back()->withErrors($validator)->withInput();
+    }
+        $post = new Post([
+            "nocm" => $request->nocm,
+            "user" => $request->user,
+            "nama" => $request->nama,
             "pelayanan" => $request->pelayanan,
-            "kunjungan" =>str_replace([' ', '-', ], '/', $request->kunjungan),
+            "kunjungan" => $request->kunjungan,
         ]);
-       $post->save();
+
+        $post->save();
 
         if ($request->hasFile("images")) {
             $files = $request->file("images");
@@ -51,7 +107,7 @@ class Postcontroller extends Controller
             }
         }
 
-        return redirect("/");
+        return back();
     }
 
     private function makeUniqueImageName($imageName)
@@ -82,6 +138,30 @@ class Postcontroller extends Controller
 
     public function update(Request $request, $id)
     {
+        $rules = [
+            'nocm' => 'required|string|size:8',
+            'nama' => 'required',
+            'pelayanan' => 'required|not_in:Silahkan pilih..',
+            'kunjungan' => 'required|string|size:10',
+        ];
+    
+        $messages = [
+            'nocm.required' => 'Nomor CM harus diisi.',
+            'nocm.string' => 'Nomor CM harus berupa karakter.',
+            'nocm.size' => 'Nomor CM harus terdiri dari 8 karakter.',
+            'nama.required' => 'Nama harus diisi.',
+            'pelayanan.required' => 'Jenis Pelayanan harus dipilih.',
+            'pelayanan.not_in' => 'Jenis Pelayanan harus dipilih.',
+            'kunjungan.required' => 'Tanggal kunjungan harus diisi.',
+            'kunjungan.string' => 'Tanggal kunjungan harus diisi.',
+            'kunjungan.size' => 'Tanggal kunjungan harus sesuai (dd/mm/yyyy).',
+        ];
+    
+        $validator = Validator::make($request->all(), $rules, $messages);
+    
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
         $post = Post::findOrFail($id);
 
         $post->update([
@@ -89,7 +169,7 @@ class Postcontroller extends Controller
             "user" => $request->user,
             "nama" => $request->nama,
             "pelayanan" => $request->pelayanan,
-            "kunjungan" => str_replace([' ', '-', ], '/', $request->kunjungan),
+            "kunjungan" => $request->kunjungan,
         ]);
 
         if ($request->hasFile("images")) {

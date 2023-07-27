@@ -47,3 +47,70 @@ $('.pop').ready(function() {
             $(row_item).remove();
         });
     });
+
+    const cmInput = document.getElementById('cmInput');
+    const warningMessage = document.getElementById('warningMessage');
+
+    cmInput.addEventListener('change', function () {
+        const enteredValue = this.value;
+
+        if (enteredValue.length === 8 && !isNaN(enteredValue)) {
+            warningMessage.textContent = '';
+        } else {
+            warningMessage.textContent = 'Masukkan No. Rekam Medis yang sesuai';
+        }
+    });
+
+    
+    function formatNumber(input) {
+        // Remove any non-digit characters from the input
+        const cleanedInput = input.replace(/\D/g, '');
+        const warningTanggal = document.getElementById('errorKunjungan');
+        const kosong = "";
+
+        // If the input is exactly 8 digits
+        if (cleanedInput.length === 8) {
+            // Split the input into two parts: the first two digits and the rest
+            const day = cleanedInput.substring(0, 2);
+            const month = cleanedInput.substring(2, 4);
+            const year = cleanedInput.substring(4);
+
+            // Check if the first two digits are within a valid date range (01-31)
+            if (parseInt(day) >= 1 && parseInt(day) <= 31) {
+                warningTanggal.textContent = '';
+                return `${day}/${month}/${year}`;
+            } if (parseInt(day) >= 32){
+                warningTanggal.textContent = 'Isi tanggal dengan benar.';
+                return  kosong;
+            } else {
+                return kosong;
+            }
+        }
+
+        // If the input is less than 8 digits, pad with leading zeros up to 8 digits
+        if (cleanedInput.length == 8 && cleanedInput.length == 7) {
+            const paddedInput = cleanedInput.padStart(8, '0');
+            return formatNumber(paddedInput);
+        } if(cleanedInput.length <= 6) {
+            warningTanggal.textContent = 'Isi tanggal dengan benar.';
+            return kosong;
+        }
+
+        // If the input is not exactly 8 digits or doesn't meet the condition, replace any non-digit characters with "/"
+        return cleanedInput.replace(/\D/g, '/');
+    }
+
+    // Get the input element
+    const numberInput = document.getElementById('kunjunganInput');
+
+    // Add event listener to the input field using the 'change' event
+    numberInput.addEventListener('change', function () {
+        // Get the entered value from the input field
+        const enteredValue = numberInput.value;
+
+        // Call the formatNumber function to format the input
+        const formattedValue = formatNumber(enteredValue);
+
+        // Update the input field value with the formatted output
+        numberInput.value = formattedValue;
+    });
