@@ -62,6 +62,7 @@ class Postcontroller extends Controller
         'nama' => 'required',
         'pelayanan' => 'required|not_in:Silahkan pilih..',
         'kunjungan' => 'required|string|size:10',
+        'images' => 'required|image',
     ];
 
     $messages = [
@@ -74,6 +75,8 @@ class Postcontroller extends Controller
         'kunjungan.required' => 'Tanggal kunjungan harus diisi.',
         'kunjungan.string' => 'Tanggal kunjungan harus diisi.',
         'kunjungan.size' => 'Tanggal kunjungan harus sesuai (dd/mm/yyyy).',
+        'images.required' => 'Harus melampirkan gambar.',
+        'images.image' => 'File harus berupa gambar.',
     ];
 
     $validator = Validator::make($request->all(), $rules, $messages);

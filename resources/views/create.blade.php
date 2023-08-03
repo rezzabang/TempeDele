@@ -34,7 +34,7 @@
                         <input type="text" id="kunjunganInput" name="kunjungan" class="form-control m-2 datepicker" placeholder="dd/mm/yyyy" value="{{ old('kunjungan') }}">
                         <p class="m-2" id="errorKunjungan" style="color: red; margin-top: 5px;"></p>
                         <label class="m-1" for="user">Petugas:</label>
-                        <input type="text" name="user" class="form-control m-2" placeholder="" value="{{ Auth::user()->name }}" readonly>
+                        <input type="text" name="user" class="form-control m-2" placeholder="Nama Petugas" value="{{ Auth::user()->name }}" readonly>
                         <label class="m-1">Dokumen:</label>
                         <div id="show_item" class="m-2">
                             <div class="row">

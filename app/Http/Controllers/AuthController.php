@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 
 use App\Models\User;
+use App\Rules\ReCaptchaRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+
 
 class AuthController extends Controller
 {
@@ -53,6 +55,12 @@ class AuthController extends Controller
  
     public function loginPost(Request $request)
     {
+        $request->validate([
+            'username' => [ 'required', 'string'],
+            'password' => ['required'],
+            'g-recaptcha-response' => ['required', new ReCaptchaRule]
+        ]);
+
         $credetials = [
             'username' => $request->username,
             'password' => $request->password,

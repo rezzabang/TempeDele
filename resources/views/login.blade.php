@@ -5,17 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://www.google.com/recaptcha/api.js"></script>
     <style>
-        @keyframes shake {
-            0% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            50% { transform: translateX(10px); }
-            75% { transform: translateX(-10px); }
-            100% { transform: translateX(0); }
-        }
-        .shake-card {
-            animation: shake 0.4s;
-        }
+        .grecaptcha-badge { visibility: hidden; }
     </style>
 </head>
 <body>
@@ -31,7 +23,7 @@
                             {{ Session::get('error') }}
                         </div>
                     @endif
-                    <form action="{{ route('login') }}" method="POST">
+                    <form action="{{ route('login') }}" id="login-form" method="POST">
                         @csrf
                         <div class="mb-3">
                             <label for="username" class="form-label">Username</label>
@@ -41,9 +33,14 @@
                             <label for="password" class="form-label">Password</label>
                             <input type="password" name="password" class="form-control" id="password" required>
                         </div>
+                        <br>
                         <div class="mb-3">
                             <div class="d-grid">
-                                <button class="btn btn-primary">Masuk</button>
+                                <input type="hidden" name="g-recaptcha-response" id="hidden-input"/>
+                                <button class="btn btn-primary g-recaptcha" 
+                                data-sitekey="{{config('services.recaptcha.site_key')}}" 
+                                data-callback='onSubmit' 
+                                data-action='login'>Submit</button>
                             </div>
                         </div>
                     </form>
@@ -60,4 +57,10 @@
         </div>
     </div>
 </footer>
+<script>
+   function onSubmit(token) {
+     document.getElementById('hidden-input').value = token; 
+     document.getElementById("login-form").submit();
+   }
+  </script>
 </html>
