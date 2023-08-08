@@ -61,3 +61,58 @@ hr {
 .shake-card {
     animation: shake 0.4s;
 }
+
+.errorKunjungan {
+    color: red; margin-top: 5px;
+}
+
+.warningMessage {
+    color: red; margin-top: 5px;
+}
+
+.toggle-ranap {
+    display: none;
+}
+
+.toggle-rajal {
+    display: none;
+}
+
+.toggle-igd {
+    display: none;
+}
+
+.diagnosa-results {
+    position: absolute;
+    width: 100%;
+    z-index: 9999;
+    background-color: #ffffff;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.15);
+    border: 1px solid #ced4da;
+    border-radius: 4px;
+    max-height: 200px;
+    overflow-y: auto;
+    display: none;
+  }
+
+  .diagnosa-results .list-group-item {
+    cursor: pointer;
+  }
+
+  .diagnosa-results .list-group-item:hover {
+    background-color: #f8f9fa;
+  }
+
+  .diagnosa-results {
+    border: none;
+    outline: none;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  }
+
+  .imagepreview {
+    width: 100%;
+  }
+
+  .m-2 {
+    color: red; margin-top: 5px;
+  }

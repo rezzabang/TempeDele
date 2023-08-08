@@ -12,8 +12,10 @@ class Post extends Model
     protected $fillable=[
         'nocm',
         'nama',
-        'kunjungan',
         'pelayanan',
+        'kunjungan',
+        'diagnosa',
+        'sctid',
         'user',
     ];
  

@@ -5,10 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
-    <script src="https://www.google.com/recaptcha/api.js"></script>
-    <style>
-        .grecaptcha-badge { visibility: hidden; }
-    </style>
 </head>
 <body>
     <div class="row justify-content-center mt-5">
@@ -23,24 +19,33 @@
                             {{ Session::get('error') }}
                         </div>
                     @endif
-                    <form action="{{ route('login') }}" id="login-form" method="POST">
+                    <form action="{{ route('login') }}" method="POST">
                         @csrf
-                        <div class="mb-3">
+                        <div class="mb-3 form-group">
                             <label for="username" class="form-label">Username</label>
                             <input type="username" name="username" class="form-control" id="username" placeholder="Masukkan Username" required>
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-3 form-group">
                             <label for="password" class="form-label">Password</label>
                             <input type="password" name="password" class="form-control" id="password" required>
+                        </div>
+                        <div class="mb-3 form-group">
+                            <label for="captcha">Captcha</label>
+                            <div class="captcha m-3">
+                                <span>{!! captcha_img('flat') !!}</span>
+                                <button type="button" class="btn btn-danger" class="reload" id="reload">
+                                    &#x21bb;
+                                </button>
+                            </div>
+                            <input id="captcha" type="text" class="form-control" placeholder="Enter Captcha" name="captcha">
+                            @error('captcha')
+                                <label for="" class="text-danger m-1">{{ $message }}</label>
+                            @enderror
                         </div>
                         <br>
                         <div class="mb-3">
                             <div class="d-grid">
-                                <input type="hidden" name="g-recaptcha-response" id="hidden-input"/>
-                                <button class="btn btn-primary g-recaptcha" 
-                                data-sitekey="{{config('services.recaptcha.site_key')}}" 
-                                data-callback='onSubmit' 
-                                data-action='login'>Submit</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </div>
                     </form>
@@ -57,10 +62,16 @@
         </div>
     </div>
 </footer>
-<script>
-   function onSubmit(token) {
-     document.getElementById('hidden-input').value = token; 
-     document.getElementById("login-form").submit();
-   }
-  </script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script type="text/javascript">
+    $('#reload').click(function () {
+        $.ajax({
+            type: 'GET',
+            url: '{{ route('reloadCaptcha') }}',
+            success: function (data) {
+                $(".captcha span").html(data.captcha);
+            }
+        });
+    });
+</script>
 </html>

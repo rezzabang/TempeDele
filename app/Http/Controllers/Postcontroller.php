@@ -6,12 +6,11 @@ use App\Exports\LaporanExport;
 use App\Models\Image;
 use App\Models\Post;
 use Illuminate\Http\Request;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Storage;
-use Maatwebsite\Excel\Facades\Excel;
 use Carbon\Carbon;
-use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Validator;
+
+
 
 class Postcontroller extends Controller
 {
@@ -25,44 +24,17 @@ class Postcontroller extends Controller
         return view('create');
     }
 
-    // public function store(Request $request)
-    // {
-    //     $post =new Post([
-    //         "nocm" =>$request->nocm,
-    //         "user" =>$request->user,
-    //         "nama" =>$request->nama,
-    //         "pelayanan" => $request->pelayanan,
-    //         "kunjungan" =>$request->kunjungan,
-    //     ]);
-    //    $post->save();
-
-    //     if ($request->hasFile("images")) {
-    //         $files = $request->file("images");
-
-    //         foreach ($files as $file) {
-    //             $extension = $file->getClientOriginalExtension();
-    //             $imageName = $request->kunjungan . $request->nocm . '.' . $extension;
-    //             $imageName = str_replace(['/','-'],'', $imageName);
-    //             $imageName = $this->makeUniqueImageName($imageName);
-    //             $file->storeAs('public/post-img/', $imageName);
-    //             $validatedData['image'] = $imageName;
-    //             $validatedData['post_id'] = $post->id;
-
-    //             Image::create($validatedData);
-    //         }
-    //     }
-
-    //     return redirect("/");
-    // }
-
     public function store(Request $request)
     {
     $rules = [
         'nocm' => 'required|string|size:8',
         'nama' => 'required',
         'pelayanan' => 'required|not_in:Silahkan pilih..',
+        'diagnosa' => 'required',
         'kunjungan' => 'required|string|size:10',
-        'images' => 'required|image',
+        'images' => 'array',
+        'images.*' => 'image',
+
     ];
 
     $messages = [
@@ -72,10 +44,10 @@ class Postcontroller extends Controller
         'nama.required' => 'Nama harus diisi.',
         'pelayanan.required' => 'Jenis Pelayanan harus dipilih.',
         'pelayanan.not_in' => 'Jenis Pelayanan harus dipilih.',
+        'diagnosa.required' => 'Silahkan masukkan diagnosa.',
         'kunjungan.required' => 'Tanggal kunjungan harus diisi.',
         'kunjungan.string' => 'Tanggal kunjungan harus diisi.',
         'kunjungan.size' => 'Tanggal kunjungan harus sesuai (dd/mm/yyyy).',
-        'images.required' => 'Harus melampirkan gambar.',
         'images.image' => 'File harus berupa gambar.',
     ];
 
@@ -89,6 +61,8 @@ class Postcontroller extends Controller
             "user" => $request->user,
             "nama" => $request->nama,
             "pelayanan" => $request->pelayanan,
+            "diagnosa" => $request->diagnosa,
+            "sctid" => $request->sctid,
             "kunjungan" => $request->kunjungan,
         ]);
 
@@ -145,6 +119,7 @@ class Postcontroller extends Controller
             'nocm' => 'required|string|size:8',
             'nama' => 'required',
             'pelayanan' => 'required|not_in:Silahkan pilih..',
+            'diagnosa' => 'required',
             'kunjungan' => 'required|string|size:10',
         ];
     
@@ -155,6 +130,7 @@ class Postcontroller extends Controller
             'nama.required' => 'Nama harus diisi.',
             'pelayanan.required' => 'Jenis Pelayanan harus dipilih.',
             'pelayanan.not_in' => 'Jenis Pelayanan harus dipilih.',
+            'diagnosa.required' => 'Masukkan diagnosa.',
             'kunjungan.required' => 'Tanggal kunjungan harus diisi.',
             'kunjungan.string' => 'Tanggal kunjungan harus diisi.',
             'kunjungan.size' => 'Tanggal kunjungan harus sesuai (dd/mm/yyyy).',
@@ -172,6 +148,8 @@ class Postcontroller extends Controller
             "user" => $request->user,
             "nama" => $request->nama,
             "pelayanan" => $request->pelayanan,
+            "diagnosa" => $request->diagnosa,
+            "sctid" => $request->sctid,
             "kunjungan" => $request->kunjungan,
         ]);
 
@@ -232,13 +210,12 @@ class Postcontroller extends Controller
             ->orWhere('nama','like',"%$search%")
             ->orWhere('user','like',"%$search%")
             ->orWhere('pelayanan','like',"%$search%")
+            ->orWhere('sctid','like',"%$search%")
             ->orWhere('kunjungan','like',"%$search%");
             })->paginate(10);
             
             return view('search',compact('posts','search'));
     }
-
-
 
     public function exportLaporan(Request $request)
     {

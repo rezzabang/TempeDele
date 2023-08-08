@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 
 use App\Models\User;
-use App\Rules\ReCaptchaRule;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Validator;
+
 
 
 class AuthController extends Controller
@@ -55,11 +56,24 @@ class AuthController extends Controller
  
     public function loginPost(Request $request)
     {
-        $request->validate([
-            'username' => [ 'required', 'string'],
-            'password' => ['required'],
-            'g-recaptcha-response' => ['required', new ReCaptchaRule]
-        ]);
+        $rules = [
+            'username' => 'required',
+            'password' => 'required',
+            'captcha' => 'required|captcha'
+        ];
+
+        $message = [
+            'username.required' => 'Username harus di isi',
+            'password.required' => 'Password harus di isi',
+            'captcha.required' => 'Kode harus di isi',
+            'captcha.captcha' => 'Kode tidak sesuai',
+        ];
+
+        $validator = Validator::make($request->all(), $rules, $message);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
 
         $credetials = [
             'username' => $request->username,
@@ -126,6 +140,11 @@ class AuthController extends Controller
         $user->delete();
         
         return back();
+    }
+
+    public function reloadCaptcha()
+    {
+        return response()->json(['captcha'=> captcha_img('flat')]);
     }
     
 }

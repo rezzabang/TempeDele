@@ -27,7 +27,7 @@
                         <div class="modal-dialog">
                             <div class="modal-content">              
                                 <div class="modal-body">
-                                    <img src="{{ asset('storage/post-img/'. $posts->images) }}" class="imagepreview" style="width: 100%;" >
+                                    <img src="{{ asset('storage/post-img/'. $img->image) }}" class="imagepreview">
                                     <button type="button" class="btn-close position-absolute top-0 end-0 m-1" style="z-index: 1050;" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                             </div>
@@ -50,28 +50,32 @@
                     @method("put")
                     <label class="m-1" for="nocm">No Rekam Medis:</label>
                     <input type="text" id= "cmInput" name="nocm" class="form-control m-2" placeholder="Nomor Rekam medis" value="{{ $posts->nocm }}">
-                    <p class="m-2" id="warningMessage" style="color: red; margin-top: 5px;"></p>
+                    <p class="m-2" id="warningMessage"></p>
                     <label class="m-1" for="nama">Nama Pasien:</label>
                     <input type="text" name="nama" class="form-control m-2" placeholder="Nama Pasien" value="{{ $posts->nama }}">
                     <label class="m-1" for="rawat">Jenis Pelayanan:</label>
                     <select class="form-control m-2" name="pelayanan">
-                        <option value="{{ $posts->pelayanan }}" class="pilihan" disabled selected>{{ $posts->pelayanan }}</option>
+                        <option value="{{ $posts->pelayanan }}" class="pilihan">{{ $posts->pelayanan }}</option>
                         <option value="Rawat Inap">Rawat Inap</option>
                         <option value="Rawat Jalan">Rawat Jalan</option>
                     </select>
                     <label class="m-1" for="kunjungan">Tanggal Kunjungan:</label>
                     <input type="text" id="kunjunganInput" name="kunjungan" class="form-control m-2" placeholder="Tanggal Kunjungan Pasien" value="{{ $posts->kunjungan }}">
-                    <p class="m-2" id="errorKunjungan" style="color: red; margin-top: 5px;"></p>
+                    <p class="m-2" id="errorKunjungan"></p>
+                    <label class="m-1" for="diagnosa">Diagnosa:</label>
+                    <input type="text" id="diagnosaInput" name="diagnosa" class="form-control m-2" placeholder="Diagnosa Pasien" value="{{ $posts->diagnosa }}">
+                    <div id="diagnosaResults" class="diagnosa-results list-group"></div>
+                    <input type="text" id="sctidInput" name="sctid" value="{{ $posts->sctid }}" hidden>
                     <label class="m-1" for="user">Petugas:</label>
                     <input type="text" name="user" class="form-control m-2" placeholder="" value="{{ Auth::user()->name }}" readonly>
-                    <label class="m-1">Dokumen:</label>
+                    <label class="m-1">Tambah Dokumen:</label>
                     <div id="show_item" class="m-2">
                         <div class="row">
                             <div class="col-8">
                                 <input type="file" class="form-control input-file-now-custom" name="images[]" multiple>
                             </div>
                             <div class="col-3">
-                                <button class="btn btn-primary add_item_btn">+</button>
+                                <button class="btn btn-primary add_item_btn"><i class="fas fa-plus"></i></button>
                             </div>
                         </div>
                     </div>

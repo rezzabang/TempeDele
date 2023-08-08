@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string("nocm");
             $table->string("nama");
             $table->string("pelayanan");
+            $table->string("diagnosa");
+            $table->string("sctid");
             $table->string("kunjungan");
             $table->timestamps();
         });

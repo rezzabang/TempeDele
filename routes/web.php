@@ -22,12 +22,13 @@ use App\Http\Controllers\AuthController;
 Route::group(['middleware' => 'guest'], function () {
     Route::get('/login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login');
     Route::post('/login', [\App\Http\Controllers\AuthController::class, 'loginPost'])->name('login');
+    Route::get('/reloadCaptcha', [\App\Http\Controllers\AuthController::class, 'reloadCaptcha'])->name('reloadCaptcha');
 });
 
 Route::group(['middleware' => 'auth'], function () {
     Route::get('/',[\App\Http\Controllers\Postcontroller::class,'index']);
     Route::get('/create',function(){ return view('create'); });
-    Route::post('/post',[\App\Http\Controllers\Postcontroller::class,'store']);
+    Route::post('/post',[\App\Http\Controllers\Postcontroller::class,'store'])->name('post');
     Route::delete('/delete/{id}',[\App\Http\Controllers\Postcontroller::class,'destroy']);
     Route::get('/edit/{id}',[\App\Http\Controllers\Postcontroller::class,'edit']);
     Route::put('/update/{id}',[\App\Http\Controllers\Postcontroller::class,'update']);
