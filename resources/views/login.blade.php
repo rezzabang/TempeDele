@@ -43,11 +43,13 @@
                                 <label for="" class="text-danger m-1">{{ $message }}</label>
                             @enderror
                         </div>
-                        <input type="hidden" class="g-recaptcha" name="recaptcha" id="recaptcha_token">
+                        <div class="mb-3 form-group">
+                            <input type="hidden" class="g-recaptcha" name="recaptcha" id="recaptcha_token">
+                        </div>
                         <br>
                         <div class="mb-3">
                             <div class="d-grid">
-                                <button class="btn btn-primary btn-submit">Submit</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
                             </div>
                         </div>
                     </form>
