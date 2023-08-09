@@ -62,7 +62,6 @@
 
         function fetchDiagnosaList(searchTerm) {
             const apiUrl = `${apiUrlBase}?apiKey=${apiKey}&string=${searchTerm}&sabs=SNOMEDCT_US&returnIdType=code`;
-            console.log(apiUrl);
             $.ajax({
               url: apiUrl,
               method: "GET",

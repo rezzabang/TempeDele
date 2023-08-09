@@ -16,10 +16,10 @@ class Recaptcha implements Rule
         ]);
 
         if (!($response->json()["success"] ?? false)) {
-
             return true;
         }
-	return false;
+        
+	    return false;
     }
 
     public function message()
