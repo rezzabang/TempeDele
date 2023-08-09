@@ -43,6 +43,7 @@
                                 <label for="" class="text-danger m-1">{{ $message }}</label>
                             @enderror
                         </div>
+                        <input type="hidden" class="g-recaptcha" name="recaptcha" id="recaptcha_token">
                         <br>
                         <div class="mb-3">
                             <div class="d-grid">
@@ -75,19 +76,15 @@
         });
     });
 
-    $('#loginForm').submit(function(event) {
-            event.preventDefault();
-            grecaptcha.ready(function() {
-                    grecaptcha.execute("{{ config('services.recaptcha.site_key') }}", {action: 'submit'}).then(function(token) {
-    
-                    $('#loginForm').prepend('<input type="hidden" name="recaptcha" value="' + token + '">');
-    
-                    $('#loginForm').unbind('submit').submit();
-    
+    grecaptcha.ready(function () {
+                document.getElementById('loginForm').addEventListener("submit", function (event) {
+                    event.preventDefault();
+                    grecaptcha.execute('{{ config('services.recaptcha.site_key') }}', { action: 'submit' })
+                        .then(function (token) {
+                            document.getElementById("recaptcha_token").value = token;
+                            document.getElementById('loginForm').submit();
+                        });
                 });
-    
             });
-    
-        });
 </script>
 </html>

@@ -61,7 +61,7 @@ class AuthController extends Controller
             'username' => 'required',
             'password' => 'required',
             'captcha' => 'required|captcha',
-            'recaptcha' => 'required',
+            'recaptcha' => ['required', new Recaptcha($request->recaptcha)]
         ];
 
         $message = [
@@ -81,7 +81,6 @@ class AuthController extends Controller
         $credetials = [
             'username' => $request->username,
             'password' => $request->password,
-            'recaptcha' => new Recaptcha($request->recaptcha)
         ];
  
         if (Auth::attempt($credetials)) {
