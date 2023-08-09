@@ -14,12 +14,12 @@ class Recaptcha implements Rule
                 'response' => $value,
                 'ip' => request()->ip(),
         ]);
-        dd($response);
-        if ($response->successful() && $response->json('success') && $response->json('score') > config('services.recaptcha.min_score')) {
+
+        if (!($response->json()["success"] ?? false)) {
+
             return true;
         }
-
-        return false;
+	return false;
     }
 
     public function message()

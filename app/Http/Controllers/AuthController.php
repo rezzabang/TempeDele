@@ -63,7 +63,6 @@ class AuthController extends Controller
             'captcha' => 'required|captcha',
             'recaptcha' => ['required', new Recaptcha($request->recaptcha)]
         ];
-        dd($request->recaptcha);
         $message = [
             'username.required' => 'Username harus di isi',
             'password.required' => 'Password harus di isi',
