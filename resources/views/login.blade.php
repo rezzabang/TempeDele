@@ -78,13 +78,13 @@
     $('#loginForm').submit(function(event) {
             event.preventDefault();
             grecaptcha.ready(function() {
-                    grecaptcha.execute("{{ config('services.recaptcha.site_key) }}", {action: 'submit'}).then(function(token) {
+                    grecaptcha.execute("{{ config('services.recaptcha.site_key') }}", {action: 'submit'}).then(function(token) {
     
                     $('#loginForm').prepend('<input type="hidden" name="g-recaptcha" value="' + token + '">');
     
                     $('#loginForm').unbind('submit').submit();
     
-                });;
+                });
     
             });
     
