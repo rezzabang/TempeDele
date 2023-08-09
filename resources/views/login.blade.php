@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="row justify-content-center mt-5">
-        <div class="col-l4">
+        <div class="col-l0">
             <div class="card @if(Session::has('error')) shake-card @endif">
                 <div class="card-header text-center">
                     <h1 class="card-title">Login</h1>
