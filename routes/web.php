@@ -38,7 +38,7 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/logout', [\App\Http\Controllers\AuthController::class, 'logout'])->name('logout');
     Route::get('/search',[\App\Http\Controllers\Postcontroller::class,'search']);
     Route::get('/view/{id}',[\App\Http\Controllers\Postcontroller::class,'view']);
-    Route::get('/user',[\App\Http\Controllers\AuthController::class,'index']);
+    Route::get('/user',[\App\Http\Controllers\AuthController::class,'index'])->name('user');
     Route::get('/edituser/{id}',[\App\Http\Controllers\AuthController::class,'edituser']);
     Route::delete('/deleteuser/{id}',[\App\Http\Controllers\AuthController::class,'deleteuser']);
     Route::put('/updateuser/{id}',[\App\Http\Controllers\AuthController::class,'updateuser'])->name('updateuser');

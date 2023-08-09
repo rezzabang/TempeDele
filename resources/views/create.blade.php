@@ -37,7 +37,7 @@
                         <label class="m-1" for="diagnosa">Diagnosa:</label>
                         <input type="text" id="diagnosaInput" name="diagnosa" class="form-control m-2" placeholder="Diagnosa Pasien" value="{{ old('diagnosa') }}">
                         <div id="diagnosaResults" class="diagnosa-results list-group"></div>
-                        <input type="text" id="sctidInput" name="sctid" hidden>
+                        <input type="text" id="sctidInput" name="sctid"  value="{{ old('sctid') }}" hidden>
                         <label class="m-1" for="user">Petugas:</label>
                         <input type="text" name="user" class="form-control m-2" placeholder="Nama Petugas" value="{{ Auth::user()->name }}" readonly>
                         <label class="m-1 toggle-rajal" for="rmRajal" id="rmRajal">RM-02:</label>
