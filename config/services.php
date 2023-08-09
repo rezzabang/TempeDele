@@ -32,7 +32,7 @@ return [
     ],
     'recaptcha' => [
         'site_key' => env('RECAPTCHA_SITE_KEY'),
-        'secret_key' => env('RECAPTCHA_SECRET_KEY'),
+        'secret_key' => env('RECAPTCHA_SERVER_KEY'),
     ],
     'snomed' => [
         'api_key' => env('SNOMED_API_KEY'),

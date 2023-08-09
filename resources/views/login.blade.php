@@ -4,12 +4,12 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
 </head>
 <body>
     <div class="row justify-content-center mt-5">
-        <div class="col-l0">
+        <div class="col-10 col-md-6 col-sm-8">
             <div class="card @if(Session::has('error')) shake-card @endif">
                 <div class="card-header text-center">
                     <h1 class="card-title">Login</h1>
@@ -23,7 +23,7 @@
                     <form action="{{ route('login') }}" method="POST" id="loginForm">
                         @csrf
                         <div class="mb-3 form-group">
-                            <input type="text" name="recaptcha" id="recaptcha_token" hidden>
+                            <input type="hidden" class="g-recaptcha form-control" name="recaptcha" id="recaptcha_token">
                         </div>
                         <div class="mb-3 form-group">
                             <label for="username" class="form-label">Username</label>

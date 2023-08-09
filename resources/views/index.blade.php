@@ -20,7 +20,7 @@
                     <div class="form-group">
                         <form method="get" action="/search">
                             <div class="input-group">
-                                <input class="form-control" name="search" placeholder="Ketik untuk mencari..." value="{{ isset($search) ? $search : ''}}">
+                                <input class="form-control" name="search" placeholder="Ketik untuk mencari..." value="{{ isset($search) ? $search : ''}}" required>
                                 <button type="submit" class="btn btn-primary">Cari</button>
                             </div>
                         </form>

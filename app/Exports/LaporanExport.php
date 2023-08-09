@@ -6,7 +6,6 @@ use App\Models\Post;
 use Maatwebsite\Excel\Concerns\WithHeadings;
 use Maatwebsite\Excel\Concerns\FromQuery;
 use Maatwebsite\Excel\Concerns\Exportable;
-use Maatwebsite\Excel\Concerns\WithMapping;
 
 class LaporanExport implements FromQuery, WithHeadings
 {
@@ -28,10 +27,13 @@ class LaporanExport implements FromQuery, WithHeadings
                 $query->where('nocm', 'like', '%' . $this->search . '%')
                       ->orWhere('nama', 'like', '%' . $this->search . '%')
                       ->orWhere('user', 'like', '%' . $this->search . '%')
+                      ->orWhere('sctid', 'like', '%' . $this->search . '%')
+                      ->orWhere('diagnosa', 'like', '%' . $this->search . '%')
+                      ->orWhere('pelayanan', 'like', '%' . $this->search . '%')
                       ->orWhere('kunjungan', 'like', '%' . $this->search . '%');
             }
         })
-        ->select("user", "nocm", "nama", "kunjungan", "created_at", "updated_at");
+        ->select("user", "nocm", "nama", "pelayanan", "kunjungan", "diagnosa", "created_at", "updated_at");
         return $post;
     }
 
@@ -41,9 +43,11 @@ class LaporanExport implements FromQuery, WithHeadings
             'Petugas',
             'No RM',
             'Nama Pasien',
+	    'Jenis Pelayanan',
             'Tanggal Kunjungan',
+	    'Diagnosa',
             'Tanggal Upload',
-            'Tanggal Terakhir Update'
+            'Tanggal Update'
         ];
         
     }

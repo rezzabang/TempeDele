@@ -210,6 +210,8 @@ class Postcontroller extends Controller
             ->orWhere('nama','like',"%$search%")
             ->orWhere('user','like',"%$search%")
             ->orWhere('pelayanan','like',"%$search%")
+            ->orWhere('sctid','like',"%$search%")
+            ->orWhere('diagnosa','like',"%$search%")
             ->orWhere('kunjungan','like',"%$search%");
             })->paginate(10);
             

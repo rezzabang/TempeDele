@@ -38,6 +38,8 @@
                     <input type="text" name="pelayanan" class="form-control m-2" placeholder="Jenis Pelayanan" value="{{ $posts->pelayanan }}" readonly>
                     <label class="m-1" for="kunjungan">Tanggal Kunjungan:</label>
                     <input type="text" name="kunjungan" class="form-control m-2" placeholder="Tanggal Kunjungan Pasien" value="{{ $posts->kunjungan }}" readonly>
+                    <label class="m-1" for="diagnosa">Diagnosa:</label>
+                    <input type="text" name="diagnosa" class="form-control m-2" placeholder="Diagnosa Pasien" value="{{ $posts->diagnosa }}" readonly>
                     <label class="m-1" for="user">Petugas:</label>
                     <input type="text" name="user" class="form-control m-2" placeholder="" value="{{ $posts->user }}" readonly>
                     <a class="btn btn-secondary m-2" href="{{ url()->previous() }}" role="button">Kembali</a>

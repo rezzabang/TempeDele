@@ -13,7 +13,7 @@
                           <form method="get" action="{{url('search')}}">
                             @csrf
                               <div class="input-group">
-                                  <input class="form-control" name="search" placeholder="Ketik untuk mencari..." value="{{ isset($search) ? $search : ''}}">
+                                  <input class="form-control" name="search" placeholder="Ketik untuk mencari..." value="{{ isset($search) ? $search : ''}}" required>
                                   <button type="submit" class="btn btn-primary">Cari</button>
                               </div>
                           </form>
@@ -27,11 +27,11 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                    <th>No CM</th>
-                                    <th>Nama</th>
+                                    <th>No. RM</th>
+                                    <th>Nama Pasien</th>
                                     <th>Tanggal Kunjungan</th>
-                                    <th>Pelayanan</th>
-                                    <th>User</th>
+                                    <th>Jenis Pelayanan</th>
+                                    <th>Petugas</th>
                                     <th>Update</th>
                                     <th>Delete</th>
                                     </tr>

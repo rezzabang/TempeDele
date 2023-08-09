@@ -9,16 +9,15 @@ class Recaptcha implements Rule
 {
     public function passes($attribute, $value)
     {
-        $response = Http::asForm()->post("https://www.google.com/recaptcha/api/siteverify", [
-                'secret' => config('services.recaptcha.secret_key'),
-                'response' => $value,
-                'ip' => request()->ip(),
+        $response = Http::asForm()->post('https://www.google.com/recaptcha/api/siteverify', [
+		'secret' =>  config('services.recaptcha.secret_key'),
+		'response' => $value,
         ]);
 
-        if (!($response->json()["success"] ?? false)) {
-            return true;
-        }
-        
+        if ($response->successful() && $response->json('success') && $response->json('score') > 0.7) {
+
+          return true;
+	}
 	    return false;
     }
 
