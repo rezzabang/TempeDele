@@ -14,7 +14,7 @@ class Recaptcha implements Rule
                 'response' => $value,
                 'ip' => request()->ip(),
         ]);
-
+        dd($response);
         if ($response->successful() && $response->json('success') && $response->json('score') > config('services.recaptcha.min_score')) {
             return true;
         }

@@ -23,6 +23,9 @@
                     <form action="{{ route('login') }}" method="POST" id="loginForm">
                         @csrf
                         <div class="mb-3 form-group">
+                            <input type="text" name="recaptcha" id="recaptcha_token" hidden>
+                        </div>
+                        <div class="mb-3 form-group">
                             <label for="username" class="form-label">Username</label>
                             <input type="username" name="username" class="form-control" id="username" placeholder="Masukkan Username" required>
                         </div>
@@ -42,9 +45,6 @@
                             @error('captcha')
                                 <label for="" class="text-danger m-1">{{ $message }}</label>
                             @enderror
-                        </div>
-                        <div class="mb-3 form-group">
-                            <input type="hidden" class="g-recaptcha" name="recaptcha" id="recaptcha_token">
                         </div>
                         <br>
                         <div class="mb-3">
