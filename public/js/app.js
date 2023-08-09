@@ -192,5 +192,4 @@
             ranapToggle.css('display', ranapValue);
             igdToggle.css('display', igdValue);
         });
-
     });

@@ -20,7 +20,7 @@
                         <div class="modal-dialog">
                             <div class="modal-content">              
                                 <div class="modal-body">
-                                    <img src="{{ asset('storage/post-img/'. $posts->images) }}" class="imagepreview" style="width: 100%;" >
+                                    <img src="{{ asset('storage/post-img/'. $img->image) }}" class="imagepreview" style="width: 100%;" >
                                     <button type="button" class="btn-close position-absolute top-0 end-0 m-1" style="z-index: 1050;" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                             </div>

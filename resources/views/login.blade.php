@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
+    <script src="https://www.google.com/recaptcha/api.js?render={{ config('services.recaptcha.site_key') }}"></script>
 </head>
 <body>
     <div class="row justify-content-center mt-5">
@@ -19,7 +20,7 @@
                             {{ Session::get('error') }}
                         </div>
                     @endif
-                    <form action="{{ route('login') }}" method="POST">
+                    <form action="{{ route('login') }}" method="POST" id="loginForm">
                         @csrf
                         <div class="mb-3 form-group">
                             <label for="username" class="form-label">Username</label>
@@ -45,7 +46,7 @@
                         <br>
                         <div class="mb-3">
                             <div class="d-grid">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button class="btn btn-primary btn-submit">Submit</button>
                             </div>
                         </div>
                     </form>
@@ -73,5 +74,20 @@
             }
         });
     });
+
+    $('#loginForm').submit(function(event) {
+            event.preventDefault();
+            grecaptcha.ready(function() {
+                    grecaptcha.execute("{{ config('services.recaptcha.site_key) }}", {action: 'submit'}).then(function(token) {
+    
+                    $('#loginForm').prepend('<input type="hidden" name="g-recaptcha" value="' + token + '">');
+    
+                    $('#loginForm').unbind('submit').submit();
+    
+                });;
+    
+            });
+    
+        });
 </script>
 </html>
