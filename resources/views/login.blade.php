@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="row justify-content-center mt-5">
-        <div class="col-lg-4">
+        <div class="col-l4">
             <div class="card @if(Session::has('error')) shake-card @endif">
                 <div class="card-header text-center">
                     <h1 class="card-title">Login</h1>
@@ -80,7 +80,7 @@
             grecaptcha.ready(function() {
                     grecaptcha.execute("{{ config('services.recaptcha.site_key') }}", {action: 'submit'}).then(function(token) {
     
-                    $('#loginForm').prepend('<input type="hidden" name="g-recaptcha" value="' + token + '">');
+                    $('#loginForm').prepend('<input type="hidden" name="recaptcha" value="' + token + '">');
     
                     $('#loginForm').unbind('submit').submit();
     

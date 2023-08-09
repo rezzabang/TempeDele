@@ -61,7 +61,7 @@ class AuthController extends Controller
             'username' => 'required',
             'password' => 'required',
             'captcha' => 'required|captcha',
-            'g-recaptcha' => ['required', new ReCaptcha]
+            'recaptcha' => 'required',
         ];
 
         $message = [
@@ -69,7 +69,7 @@ class AuthController extends Controller
             'password.required' => 'Password harus di isi',
             'captcha.required' => 'Captcha harus di isi',
             'captcha.captcha' => 'Captcha tidak sesuai',
-            'g-recaptcha.required' => 'Apakah anda BOT?',
+            'recaptcha.required' => 'Apakah anda BOT?',
         ];
 
         $validator = Validator::make($request->all(), $rules, $message);
@@ -81,6 +81,7 @@ class AuthController extends Controller
         $credetials = [
             'username' => $request->username,
             'password' => $request->password,
+            'recaptcha' => new Recaptcha($request->recaptcha)
         ];
  
         if (Auth::attempt($credetials)) {
