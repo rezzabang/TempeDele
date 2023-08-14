@@ -95,7 +95,7 @@
           $("#diagnosaInput").on("input", function () {
               const searchTerm = $(this).val();
               if (searchTerm === '') {
-                $("#sctidInput").val('');
+                $("#sctidInput").val('null');
                 $("#diagnosaResults").hide();
               } else {
                 clearTimeout(typingTimeout);
@@ -168,7 +168,7 @@
             const sctidInput = $('#sctidInput');
 
             if (diagnosaInputValue !== ''){
-                sctidInput.val('');
+                sctidInput.val('null');
             }
         });
 

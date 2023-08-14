@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
-
+use Illuminate\Support\Facades\Http;
+use Spatie\ImageOptimizer\OptimizerChainFactory;
 
 
 class Postcontroller extends Controller
@@ -76,7 +77,10 @@ class Postcontroller extends Controller
                 $imageName = $request->kunjungan . $request->nocm . '.' . $extension;
                 $imageName = str_replace(['/','-'],'', $imageName);
                 $imageName = $this->makeUniqueImageName($imageName);
-                $file->storeAs('public/post-img/', $imageName);
+		$file->storeAs('public/post-img/', $imageName);
+		$imagePath = storage_path('app/public/post-img/' . $imageName);
+                $optimizerChain = OptimizerChainFactory::create();
+                $optimizerChain->optimize($imagePath);
                 $validatedData['image'] = $imageName;
                 $validatedData['post_id'] = $post->id;
 
@@ -225,4 +229,14 @@ class Postcontroller extends Controller
         $fileName = 'Laporan_' . Carbon::now()->format('Ymd') . '.xlsx';
         return (new LaporanExport($search))->download($fileName);
     }
+
+   public function apiSnomed(Request $request)
+   {
+	$apiKey = config('services.snomed.api_key');
+	$searchTerm = 'fever';
+	$url = "https://uts-ws.nlm.nih.gov/rest/search/current?apiKey=".$apiKey."&string=".$searchTerm."&sabs=SNOMEDCT_US&returnIdType=code";
+	$response = Http::get($url);
+	dd($response->json());
+   }
+
 }
