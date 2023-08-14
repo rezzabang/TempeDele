@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
+use Spatie\ImageOptimizer\OptimizerChainFactory;
 
 
 
@@ -77,6 +78,9 @@ class Postcontroller extends Controller
                 $imageName = str_replace(['/','-'],'', $imageName);
                 $imageName = $this->makeUniqueImageName($imageName);
                 $file->storeAs('public/post-img/', $imageName);
+                $imagePath = storage_path('app/public/post-img/' . $imageName);
+                $optimizerChain = OptimizerChainFactory::create();
+                $optimizerChain->optimize($imagePath);
                 $validatedData['image'] = $imageName;
                 $validatedData['post_id'] = $post->id;
 
@@ -122,7 +126,7 @@ class Postcontroller extends Controller
             'diagnosa' => 'required',
             'kunjungan' => 'required|string|size:10',
         ];
-    
+
         $messages = [
             'nocm.required' => 'Nomor CM harus diisi.',
             'nocm.string' => 'Nomor CM harus berupa karakter.',
@@ -135,9 +139,9 @@ class Postcontroller extends Controller
             'kunjungan.string' => 'Tanggal kunjungan harus diisi.',
             'kunjungan.size' => 'Tanggal kunjungan harus sesuai (dd/mm/yyyy).',
         ];
-    
+
         $validator = Validator::make($request->all(), $rules, $messages);
-    
+
         if ($validator->fails()) {
             return back()->withErrors($validator)->withInput();
         }
@@ -172,36 +176,36 @@ class Postcontroller extends Controller
     public function deleteimage($id) {
         $image = Image::findOrFail($id);
         $imagePath = 'public/post-img/' . $image->image;
-        
+
         if (Storage::exists($imagePath)) {
             Storage::delete($imagePath);
         }
-    
+
         Image::find($id)->delete();
         return back();
     }
 
     public function destroy($id) {
         $post = Post::findOrFail($id);
-        
+
         $images = Image::where("post_id", $post->id)->get();
-        
+
         foreach ($images as $image) {
             $imagePath = 'public/post-img/' . $image->image;
-            
+
             if (Storage::exists($imagePath)) {
                 Storage::delete($imagePath);
             }
             $image->delete();
         }
-        
+
         $post->delete();
-        
+
         return back();
     }
 
     public function search(Request $request){
-        
+
         $search = $request->search;
         session(['search' => $search]);
         $posts = Post::where(function($query) use ($search){
@@ -213,7 +217,7 @@ class Postcontroller extends Controller
             ->orWhere('sctid','like',"%$search%")
             ->orWhere('kunjungan','like',"%$search%");
             })->paginate(10);
-            
+
             return view('search',compact('posts','search'));
     }
 

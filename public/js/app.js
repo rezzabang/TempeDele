@@ -13,7 +13,7 @@
     });
 
     const waveButtons = document.querySelectorAll('.wave-effect');
-    
+
     waveButtons.forEach((button) => {
         button.addEventListener('mouseenter', () => {
             button.style.animationPlayState = 'paused';
@@ -23,7 +23,7 @@
             button.style.animationPlayState = 'running';
         });
     });
-    
+
     $(document).ready(function() {
         let fileInputCount = 1;
         const apiUrlBase = "https://uts-ws.nlm.nih.gov/rest/search/current";
@@ -69,7 +69,7 @@
               success: function (data) {
                 const diagnosaResults = $("#diagnosaResults");
                 diagnosaResults.empty();
-          
+
                 if (data.result.results.length > 0) {
                   for (let i = 0; i < Math.min(data.result.results.length, limitResults); i++) {
                     const item = data.result.results[i];
@@ -92,25 +92,25 @@
                 },
             });
           }
-          
+
           $("#diagnosaInput").on("input", function () {
               const searchTerm = $(this).val();
               if (searchTerm === '') {
-                $("#sctidInput").val('');
+                $("#sctidInput").val('null');
                 $("#diagnosaResults").hide();
               } else {
                 clearTimeout(typingTimeout);
-          
+
                 typingTimeout = setTimeout(function () {
                   const inputOffset = $(this).offset();
                   const inputWidth = $(this).outerWidth();
                   const inputHeight = $(this).outerHeight();
-          
+
                   fetchDiagnosaList(searchTerm);
                 }.bind(this), 500);
               }
             });
-  
+
           $(document).on("click", ".diagnosa-results .list-group-item-action", function () {
             const selectedDiagnosa = $(this).text();
             const selectedSCTID = $(this).data('sctid');
@@ -136,12 +136,12 @@
             const cleanedInput = input.replace(/\D/g, '');
             const warningTanggal = document.getElementById('errorKunjungan');
             const kosong = "";
-    
+
             if (cleanedInput.length === 8) {
                 const day = cleanedInput.substring(0, 2);
                 const month = cleanedInput.substring(2, 4);
                 const year = cleanedInput.substring(4);
-    
+
                 if (parseInt(day) >= 1 && parseInt(day) <= 31) {
                     warningTanggal.textContent = '';
                     return `${day}/${month}/${year}`;
@@ -152,7 +152,7 @@
                     return kosong;
                 }
             }
-    
+
             if (cleanedInput.length == 8 && cleanedInput.length == 7) {
                 const paddedInput = cleanedInput.padStart(8, '0');
                 return formatNumber(paddedInput);
@@ -160,7 +160,7 @@
                 warningTanggal.textContent = 'Isi tanggal dengan benar.';
                 return kosong;
             }
-    
+
             return cleanedInput.replace(/\D/g, '/');
         }
 
@@ -169,7 +169,7 @@
             const sctidInput = $('#sctidInput');
 
             if (diagnosaInputValue !== ''){
-                sctidInput.val('');
+                sctidInput.val('null');
             }
         });
 
