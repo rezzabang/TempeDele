@@ -9,7 +9,7 @@
 </head>
 <body>
     <div class="row justify-content-center mt-5">
-        <div class="col-10 col-md-6 col-sm-8">
+        <div class="col-10 col-md-6 col-sm-8 col-lg-4 col-xl-4">
             <div class="card @if(Session::has('error')) shake-card @endif">
                 <div class="card-header text-center">
                     <h1 class="card-title">Login</h1>
@@ -31,7 +31,7 @@
                         </div>
                         <div class="mb-3 form-group">
                             <label for="password" class="form-label">Password</label>
-                            <input type="password" name="password" class="form-control" id="password" required>
+                            <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
                         </div>
                         <div class="mb-3 form-group">
                             <label for="captcha">Captcha</label>
@@ -41,7 +41,7 @@
                                     &#x21bb;
                                 </button>
                             </div>
-                            <input id="captcha" type="text" class="form-control" placeholder="Enter Captcha" name="captcha">
+                            <input id="captcha" type="text" class="form-control" placeholder="Masukkan Captcha" name="captcha">
                             @error('captcha')
                                 <label for="" class="text-danger m-1">{{ $message }}</label>
                             @enderror
@@ -49,7 +49,7 @@
                         <br>
                         <div class="mb-3">
                             <div class="d-grid">
-                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <button type="submit" class="btn btn-primary">Masuk</button>
                             </div>
                         </div>
                     </form>

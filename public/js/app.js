@@ -27,6 +27,7 @@
     $(document).ready(function() {
         let fileInputCount = 1;
         const limitResults = 10;
+	const apiUrlBase = "/apiSnomed";
         let typingTimeout;
         const ranapToggle = $('.toggle-ranap');
         const rajalToggle = $('.toggle-rajal');
@@ -60,11 +61,11 @@
         });
 
         function fetchDiagnosaList(searchTerm) {
+	    const apiUrl = `${apiUrlBase}?diagnosa=${searchTerm}`;
             $.ajax({
-                url: "/apiSnomed",
-                method: "POST",
-                data: { diagnosa: searchTerm },
-                    success: function(data) {
+                url: apiUrl,
+                method: "GET",
+                success: function(data) {
                         const diagnosaResults = $("#diagnosaResults");
                         diagnosaResults.empty();
         
@@ -105,12 +106,6 @@
                 const inputHeight = $(this).outerHeight();
                 
                 const diagnosaResults = $("#diagnosaResults");
-                diagnosaResults.css({
-                    top: inputOffset.top + inputHeight,
-                    left: inputOffset.left,
-                    width: inputWidth,
-                });
-
                 fetchDiagnosaList(searchTerm);
             }.bind(this), 500);
             }
