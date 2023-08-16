@@ -15,11 +15,6 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
-//Route::group(['middleware' => 'guest','throttle'], function () {
 Route::middleware(['throttle:login'],['guest'])->group( function () {
     Route::get('/login', [\App\Http\Controllers\AuthController::class, 'login'])->name('login');
     Route::post('/login', [\App\Http\Controllers\AuthController::class, 'loginPost'])->name('login');
@@ -44,5 +39,5 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/deleteuser/{id}',[\App\Http\Controllers\AuthController::class,'deleteuser']);
     Route::put('/updateuser/{id}',[\App\Http\Controllers\AuthController::class,'updateuser'])->name('updateuser');
     Route::get('/exportLaporan',[\App\Http\Controllers\Postcontroller::class,'exportLaporan']);
-    Route::get('/apiSnomed',[\App\Http\Controllers\Postcontroller::class,'apiSnomed']);
+    Route::post('/apiSnomed',[\App\Http\Controllers\Postcontroller::class,'apiSnomed']);
 });

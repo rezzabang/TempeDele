@@ -45,7 +45,6 @@
 </footer>
     
 @yield('scripts')
-<script>var apiKey = "{{ config('services.snomed.api_key') }}";</script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{{asset('js/app.js')}}" > </script>
 </body>

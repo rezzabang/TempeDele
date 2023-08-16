@@ -26,7 +26,6 @@
     
     $(document).ready(function() {
         let fileInputCount = 1;
-        const apiUrlBase = "https://uts-ws.nlm.nih.gov/rest/search/current";
         const limitResults = 10;
         let typingTimeout;
         const ranapToggle = $('.toggle-ranap');
@@ -61,54 +60,61 @@
         });
 
         function fetchDiagnosaList(searchTerm) {
-            const apiUrl = `${apiUrlBase}?apiKey=${apiKey}&string=${searchTerm}&sabs=SNOMEDCT_US&returnIdType=code`;
             $.ajax({
-              url: apiUrl,
-              method: "GET",
-              success: function (data) {
+                url: "/apiSnomed",
+                method: "POST",
+                data: { diagnosa: searchTerm },
+                    success: function(data) {
+                        const diagnosaResults = $("#diagnosaResults");
+                        diagnosaResults.empty();
+        
+                        if (data.result.results.length > 0) {
+                            for (let i = 0; i < Math.min(data.result.results.length, limitResults); i++) {
+                                const item = data.result.results[i];
+                                const diagnosaItem = $("<a>", {
+                                    href: "#",
+                                    class: "list-group-item list-group-item-action",
+                                    text: item.name,
+                                    "data-sctid": item.ui,
+                                });
+                                diagnosaResults.append(diagnosaItem);
+                            }
+                            diagnosaResults.show();
+                        } else {
+                            diagnosaResults.hide();
+                        }
+                    },
+                    error: function() {
+                        const diagnosaResults = $("#diagnosaResults");
+                        diagnosaResults.hide();
+                    },
+            });
+        }
+        
+        $("#diagnosaInput").on("input", function () {
+            const searchTerm = $(this).val();
+            if (searchTerm === '') {
+            $("#sctidInput").val('null');
+            $("#diagnosaResults").hide();
+            } else {
+            clearTimeout(typingTimeout);
+        
+            typingTimeout = setTimeout(function () {
+                const inputOffset = $(this).offset();
+                const inputWidth = $(this).outerWidth();
+                const inputHeight = $(this).outerHeight();
+                
                 const diagnosaResults = $("#diagnosaResults");
-                diagnosaResults.empty();
-          
-                if (data.result.results.length > 0) {
-                  for (let i = 0; i < Math.min(data.result.results.length, limitResults); i++) {
-                    const item = data.result.results[i];
-                    const diagnosaItem = $("<a>", {
-                      href: "#",
-                      class: "list-group-item list-group-item-action",
-                      text: item.name,
-                      "data-sctid": item.ui,
-                    });
-                    diagnosaResults.append(diagnosaItem);
-                  }
-                  diagnosaResults.show();
-                } else {
-                  diagnosaResults.hide();
-                }
-              },
-              error: function () {
-                  const diagnosaResults = $("#diagnosaResults");
-                  diagnosaResults.hide();
-                },
-            });
-          }
-          
-          $("#diagnosaInput").on("input", function () {
-              const searchTerm = $(this).val();
-              if (searchTerm === '') {
-                $("#sctidInput").val('null');
-                $("#diagnosaResults").hide();
-              } else {
-                clearTimeout(typingTimeout);
-          
-                typingTimeout = setTimeout(function () {
-                  const inputOffset = $(this).offset();
-                  const inputWidth = $(this).outerWidth();
-                  const inputHeight = $(this).outerHeight();
-          
-                  fetchDiagnosaList(searchTerm);
-                }.bind(this), 500);
-              }
-            });
+                diagnosaResults.css({
+                    top: inputOffset.top + inputHeight,
+                    left: inputOffset.left,
+                    width: inputWidth,
+                });
+
+                fetchDiagnosaList(searchTerm);
+            }.bind(this), 500);
+            }
+        });
   
           $(document).on("click", ".diagnosa-results .list-group-item-action", function () {
             const selectedDiagnosa = $(this).text();

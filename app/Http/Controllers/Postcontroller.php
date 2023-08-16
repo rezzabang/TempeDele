@@ -77,8 +77,8 @@ class Postcontroller extends Controller
                 $imageName = $request->kunjungan . $request->nocm . '.' . $extension;
                 $imageName = str_replace(['/','-'],'', $imageName);
                 $imageName = $this->makeUniqueImageName($imageName);
-		$file->storeAs('public/post-img/', $imageName);
-		$imagePath = storage_path('app/public/post-img/' . $imageName);
+                $file->storeAs('public/post-img/', $imageName);
+                $imagePath = storage_path('app/public/post-img/' . $imageName);
                 $optimizerChain = OptimizerChainFactory::create();
                 $optimizerChain->optimize($imagePath);
                 $validatedData['image'] = $imageName;
@@ -233,10 +233,10 @@ class Postcontroller extends Controller
    public function apiSnomed(Request $request)
    {
 	$apiKey = config('services.snomed.api_key');
-	$searchTerm = 'fever';
+	$searchTerm = $request->input('diagnosa');
 	$url = "https://uts-ws.nlm.nih.gov/rest/search/current?apiKey=".$apiKey."&string=".$searchTerm."&sabs=SNOMEDCT_US&returnIdType=code";
 	$response = Http::get($url);
-	dd($response->json());
+	return $response->json();
    }
 
 }
