@@ -82,7 +82,7 @@ hr {
     display: none;
 }
 
-.diagnosa-results {
+#diagnosaResults {
     position: absolute;
     width: 100%;
     z-index: 9999;
@@ -95,15 +95,15 @@ hr {
     display: none;
   }
 
-  .diagnosa-results .list-group-item {
+  #diagnosaResults .list-group-item {
     cursor: pointer;
   }
 
-  .diagnosa-results .list-group-item:hover {
+  #diagnosaResults .list-group-item:hover {
     background-color: #f8f9fa;
   }
 
-  .diagnosa-results {
+  #diagnosaResults {
     border: none;
     outline: none;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
