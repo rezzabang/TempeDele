@@ -29,6 +29,7 @@
         const apiUrlBase = "https://uts-ws.nlm.nih.gov/rest/search/current";
         const limitResults = 10;
         let typingTimeout;
+        const pelayananSelect = $('#pelayananSelect');
         const ranapToggle = $('.toggle-ranap');
         const rajalToggle = $('.toggle-rajal');
         const igdToggle = $('.toggle-igd');
@@ -181,16 +182,20 @@
             $(this).val(formattedValue);
         });
 
-        $('#pelayananSelect').on('change', function () {
-            const selectedValue = $(this).val();
-
+        function toggleVisibility(selectedValue) {
             const ranapValue = selectedValue === 'Rawat Inap' ? 'block' : 'none';
             const rajalValue = selectedValue === 'Rawat Jalan' ? 'block' : 'none';
             const igdValue = selectedValue === 'IGD' ? 'block' : 'none';
-
+    
             rajalToggle.css('display', rajalValue);
             ranapToggle.css('display', ranapValue);
             igdToggle.css('display', igdValue);
-        });
+        }
 
+        toggleVisibility(pelayananSelect.val());
+    
+        pelayananSelect.on('change', function () {
+            const selectedValue = $(this).val();
+            toggleVisibility(selectedValue);
+        });
     });
