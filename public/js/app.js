@@ -7,7 +7,7 @@
             image.addEventListener('click', function(event) {
                 event.stopPropagation();
                 const imageUrl = this.getAttribute('src');
-                const imageName = imageUrl.split('/').pop(); // Extract the image name
+                const imageName = imageUrl.split('/').pop();
                 imgpath.value = imageName;
                 modalImage.setAttribute('src', imageUrl);
                 $('#imagemodal').modal('show');

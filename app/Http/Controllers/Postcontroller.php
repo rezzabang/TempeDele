@@ -227,24 +227,18 @@ class Postcontroller extends Controller
 
     public function rotate(Request $request)
     {
-        $imagePath = 'public/post-img/' . $request->image; // Get path from request parameter
-        // Get the full path to the image
+        $imagePath = 'public/post-img/' . $request->image;
         $fullImagePath = storage_path('app/' . $imagePath);
 
-        // Check if the image file exists
         if (!Storage::exists($imagePath)) {
             abort(404, 'Image not found');
         }
 
-        // Load the image using Intervention Image
         $image = Image::make($fullImagePath);
-        // Rotate the image 90 degrees counter-clockwise
         $image->rotate(-90);
 
-        // Save the rotated image
         $image->save($fullImagePath);
 
-        // Redirect back with a success message
         return back()->with('success', 'Image rotated successfully');
     }
 }
