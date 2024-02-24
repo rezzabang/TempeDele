@@ -1,5 +1,5 @@
 @extends('layout')
-     
+
 @section('content')
 <div class="row justify-content-center">
     <div class="col-12">
@@ -46,7 +46,7 @@
                                         <td>{{ $post->user }}</td>
                                         <td><a href="/edit/{{ $post->id }}" class="btn btn-outline-primary">Edit</a></td>
                                         <td>
-                                            <form action="/delete/{{ $post->id }}" method="post">
+                                            <form action="{{ route('delete', ['id' => $post->id])}}" method="post">
                                                 <button class="btn btn-outline-danger" onclick="return confirm('Are you sure?');" type="submit">Delete</button>
                                                 @csrf
                                                 @method('delete')
@@ -59,7 +59,7 @@
                     @else
                     <h3 class="text-center">Data tidak ditemukan.</h3>
                     @endif
-                </div>                  
+                </div>
             </div>
             <div class="row justify-content-between">
                 <div class="col-md-4 mx-auto text-center mb-2">

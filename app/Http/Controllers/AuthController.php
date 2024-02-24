@@ -25,7 +25,7 @@ class AuthController extends Controller
         return view('register');
     }
 
-    public function registerPost(Request $request)
+    public function registerUser(Request $request)
     {
         $request->validate([
             'username' => [
@@ -39,13 +39,13 @@ class AuthController extends Controller
         ]);
 
         $user = new User();
- 
+
         $user->name = $request->name;
         $user->username = $request->username;
         $user->password = Hash::make($request->password);
- 
+
         $user->save();
- 
+
         return back()->with('success', 'Registrasi Berhasil');
     }
 
@@ -53,7 +53,7 @@ class AuthController extends Controller
     {
         return view('login');
     }
- 
+
     public function loginPost(Request $request)
     {
         $rules = [
@@ -79,18 +79,18 @@ class AuthController extends Controller
             'username' => $request->username,
             'password' => $request->password,
         ];
- 
+
         if (Auth::attempt($credetials)) {
             return redirect('/')->with('success', 'Login Berhasil');
         }
- 
+
         return back()->with('error', 'Username atau Password Salah');
     }
- 
+
     public function logout()
     {
         Auth::logout();
- 
+
         return redirect()->route('login');
     }
 
@@ -103,7 +103,7 @@ class AuthController extends Controller
     public function updateuser(Request $request, $id)
     {
         $user = User::findOrFail($id);
-    
+
         $request->validate([
             'username' => [
                 'required',
@@ -120,25 +120,25 @@ class AuthController extends Controller
         if ($request->filled('username')) {
             $user->username = $request->username;
         }
-    
+
         if ($request->filled('name')) {
             $user->name = $request->name;
         }
-    
+
         if ($request->filled('password')) {
             $user->password = Hash::make($request->password);
         }
-    
+
         $user->save();
-    
+
         return redirect("/user");
-    }    
+    }
 
     public function deleteuser($id) {
         $user = User::findOrFail($id);
 
         $user->delete();
-        
+
         return back();
     }
 
@@ -146,5 +146,5 @@ class AuthController extends Controller
     {
         return response()->json(['captcha'=> captcha_img('flat')]);
     }
-    
+
 }
