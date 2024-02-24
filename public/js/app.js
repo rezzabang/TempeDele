@@ -7,13 +7,13 @@
             image.addEventListener('click', function(event) {
                 event.stopPropagation();
                 const imageUrl = this.getAttribute('src');
+                const imageName = imageUrl.split('/').pop(); // Extract the image name
+                imgpath.value = imageName;
                 modalImage.setAttribute('src', imageUrl);
-                imgpath.value = imageUrl;
                 $('#imagemodal').modal('show');
                 });
             });
     });
-
     const waveButtons = document.querySelectorAll('.wave-effect');
 
     waveButtons.forEach((button) => {
@@ -188,14 +188,14 @@
             const ranapValue = selectedValue === 'Rawat Inap' ? 'block' : 'none';
             const rajalValue = selectedValue === 'Rawat Jalan' ? 'block' : 'none';
             const igdValue = selectedValue === 'IGD' ? 'block' : 'none';
-    
+
             rajalToggle.css('display', rajalValue);
             ranapToggle.css('display', ranapValue);
             igdToggle.css('display', igdValue);
         }
 
         toggleVisibility(pelayananSelect.val());
-    
+
         pelayananSelect.on('change', function () {
             const selectedValue = $(this).val();
             toggleVisibility(selectedValue);

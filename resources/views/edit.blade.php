@@ -25,12 +25,12 @@
                     </div>
                     <div class="modal fade" id="imagemodal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
                         <div class="modal-dialog">
-                            <div class="modal-content">              
+                            <div class="modal-content">
                                 <div class="modal-body">
                                     <img src="{{ asset('storage/post-img/'. $img->image) }}" class="imagepreview">
                                     <form action="/rotate" method="post">
                                         @csrf
-                                        <input class= "imagepath" type="" name="image" value="" id="imgpath">
+                                        <input class= "imagepath" type="hidden" name="image" value="" id="imgpath">
                                         <button class="btn btn-sm btn-primary mt-2" type="submit">Rotate 90°</button>
                                     </form>
                                     <button type="button" class="btn-close position-absolute top-0 end-0 m-1" style="z-index: 1050;" data-bs-dismiss="modal" aria-label="Close"></button>
@@ -38,7 +38,7 @@
                             </div>
                         </div>
                     </div>
-               @endif  
+               @endif
             </div>
             <div class="card-body">
                 <form action="/update/{{ $posts->id }}" method="post" enctype="multipart/form-data">
@@ -201,6 +201,6 @@
                 </form>
             </div>
         </div>
-    </div>                        
+    </div>
 </div>
 @endsection
