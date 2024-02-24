@@ -1,12 +1,14 @@
    $('.pop').ready(function() {
         const previewImages = document.querySelectorAll('.preview-image');
         const modalImage = document.querySelector('.modal-body .imagepreview');
+        const imgpath = document.querySelector('.modal-body .imagepath');
 
         previewImages.forEach(image => {
             image.addEventListener('click', function(event) {
                 event.stopPropagation();
                 const imageUrl = this.getAttribute('src');
                 modalImage.setAttribute('src', imageUrl);
+                imgpath.value = imageUrl;
                 $('#imagemodal').modal('show');
                 });
             });

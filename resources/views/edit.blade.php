@@ -28,6 +28,11 @@
                             <div class="modal-content">              
                                 <div class="modal-body">
                                     <img src="{{ asset('storage/post-img/'. $img->image) }}" class="imagepreview">
+                                    <form action="/rotate" method="post">
+                                        @csrf
+                                        <input class= "imagepath" type="" name="image" value="" id="imgpath">
+                                        <button class="btn btn-sm btn-primary mt-2" type="submit">Rotate 90°</button>
+                                    </form>
                                     <button type="button" class="btn-close position-absolute top-0 end-0 m-1" style="z-index: 1050;" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                             </div>

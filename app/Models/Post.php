@@ -4,7 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use App\Models\Image;
+use App\Models\images;
 
 class Post extends Model
 {
@@ -20,6 +20,6 @@ class Post extends Model
     ];
  
     public function images(){
-        return $this->hasMany(Image::class);
+        return $this->hasMany(Images::class);
     }
 }

@@ -3,14 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Exports\LaporanExport;
-use App\Models\Image;
+use App\Models\Images;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
-use Spatie\ImageOptimizer\OptimizerChainFactory;
-
+use Intervention\Image\Facades\Image;
 
 
 class Postcontroller extends Controller
@@ -78,13 +77,10 @@ class Postcontroller extends Controller
                 $imageName = str_replace(['/','-'],'', $imageName);
                 $imageName = $this->makeUniqueImageName($imageName);
                 $file->storeAs('public/post-img/', $imageName);
-                $imagePath = storage_path('app/public/post-img/' . $imageName);
-                $optimizerChain = OptimizerChainFactory::create();
-                $optimizerChain->optimize($imagePath);
                 $validatedData['image'] = $imageName;
                 $validatedData['post_id'] = $post->id;
 
-                Image::create($validatedData);
+                Images::create($validatedData);
             }
         }
 
@@ -166,7 +162,7 @@ class Postcontroller extends Controller
                 $validatedData['image'] = $imageName;
                 $validatedData['post_id'] = $post->id;
 
-                Image::create($validatedData);
+                Images::create($validatedData);
             }
         }
 
@@ -174,21 +170,21 @@ class Postcontroller extends Controller
     }
 
     public function deleteimage($id) {
-        $image = Image::findOrFail($id);
+        $image = Images::findOrFail($id);
         $imagePath = 'public/post-img/' . $image->image;
 
         if (Storage::exists($imagePath)) {
             Storage::delete($imagePath);
         }
 
-        Image::find($id)->delete();
+        Images::find($id)->delete();
         return back();
     }
 
     public function destroy($id) {
         $post = Post::findOrFail($id);
 
-        $images = Image::where("post_id", $post->id)->get();
+        $images = Images::where("post_id", $post->id)->get();
 
         foreach ($images as $image) {
             $imagePath = 'public/post-img/' . $image->image;
@@ -227,5 +223,28 @@ class Postcontroller extends Controller
         $request->session()->forget('search');
         $fileName = 'Laporan_' . Carbon::now()->format('Ymd') . '.xlsx';
         return (new LaporanExport($search))->download($fileName);
+    }
+
+    public function rotate(Request $request)
+    {
+        $imagePath = 'public/post-img/' . $request->image; // Get path from request parameter
+        // Get the full path to the image
+        $fullImagePath = storage_path('app/' . $imagePath);
+
+        // Check if the image file exists
+        if (!Storage::exists($imagePath)) {
+            abort(404, 'Image not found');
+        }
+
+        // Load the image using Intervention Image
+        $image = Image::make($fullImagePath);
+        // Rotate the image 90 degrees counter-clockwise
+        $image->rotate(-90);
+
+        // Save the rotated image
+        $image->save($fullImagePath);
+
+        // Redirect back with a success message
+        return back()->with('success', 'Image rotated successfully');
     }
 }
