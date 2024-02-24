@@ -14,7 +14,7 @@
                             <div class="pop m-2 text-center">
                                 <img src="{{ asset('storage/post-img/' . $img->image) }}" class="img-responsive preview-image" style="max-height: 100px; max-width: 100px;" alt="">
                                 @if (count($posts->images) > 1)
-                                    <form action="/deleteimage/{{ $img->id }}" method="post">
+                                    <form action="{{ route('deleteimage', ['id' => $img->id]) }}" method="post">
                                         @csrf
                                         @method('delete')
                                         <button class="btn btn-sm btn-danger mt-2" onclick="return confirm('Are you sure you want to delete this image?')">Hapus</button>
@@ -28,6 +28,11 @@
                             <div class="modal-content">              
                                 <div class="modal-body">
                                     <img src="{{ asset('storage/post-img/'. $img->image) }}" class="imagepreview">
+                                    <form action="{{ route('rotate')}}" method="post">
+                                        @csrf
+                                        <input class= "imagepath" type="hidden" name="image" value="" id="imgpath">
+                                        <button class="btn btn-sm btn-primary mt-2" type="submit">Rotate 90°</button>
+                                    </form>
                                     <button type="button" class="btn-close position-absolute top-0 end-0 m-1" style="z-index: 1050;" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                             </div>
@@ -36,7 +41,7 @@
                @endif  
             </div>
             <div class="card-body">
-                <form action="/update/{{ $posts->id }}" method="post" enctype="multipart/form-data">
+                <form action="{{ route('update',['id' => $posts->id])}}" method="post" enctype="multipart/form-data">
                     @if($errors->any())
                         <div class="alert alert-danger">
                             <ul>

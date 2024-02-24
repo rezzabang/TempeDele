@@ -46,7 +46,7 @@
                                         <td>{{ $post->user }}</td>
                                         <td><a href="/edit/{{ $post->id }}" class="btn btn-outline-primary">Edit</a></td>
                                         <td>
-                                            <form action="/delete/{{ $post->id }}" method="post">
+                                            <form action="{{ route('delete', ['id' => $post->id])}}" method="post">
                                                 <button class="btn btn-outline-danger" onclick="return confirm('Are you sure?');" type="submit">Delete</button>
                                                 @csrf
                                                 @method('delete')
@@ -61,14 +61,16 @@
                     @endif
                 </div>                  
             </div>
-            <div class="row justify-content-between">
-                <div class="col-md-4 mx-auto text-center mb-2">
-                    {{ $posts->links() }}
-                </div>
-                <div class="col-md-4 mx-auto text-center">
-                    <a class="btn btn-success mb-2 mr-2" href="{{url('exportLaporan')}}">Export Laporan</a>
+            <div class="row justify-content-center">
+                <div class="m-2 col-10 mx-auto text-center mb-2">
+                    {{ $posts->onEachSide(1)->links() }}
                 </div>
             </div>
+	    <div class="row justify-content-center">
+		<div class="m-2 col-md-4 mx-auto text-center">
+                    <a class="btn btn-success" href="{{url('exportLaporan')}}">Export Laporan</a>
+	        </div>
+	    </div>
         </div>
     </div>
 </div>

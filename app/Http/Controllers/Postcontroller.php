@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\LaporanExport;
-use App\Models\Image;
+use App\Models\Images;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Http;
 use Spatie\ImageOptimizer\OptimizerChainFactory;
+use Intervention\Image\Facades\Image;
 
 
 class Postcontroller extends Controller
@@ -84,7 +85,7 @@ class Postcontroller extends Controller
                 $validatedData['image'] = $imageName;
                 $validatedData['post_id'] = $post->id;
 
-                Image::create($validatedData);
+                Images::create($validatedData);
             }
         }
 
@@ -166,7 +167,7 @@ class Postcontroller extends Controller
                 $validatedData['image'] = $imageName;
                 $validatedData['post_id'] = $post->id;
 
-                Image::create($validatedData);
+                Images::create($validatedData);
             }
         }
 
@@ -174,21 +175,21 @@ class Postcontroller extends Controller
     }
 
     public function deleteimage($id) {
-        $image = Image::findOrFail($id);
+        $image = Images::findOrFail($id);
         $imagePath = 'public/post-img/' . $image->image;
         
         if (Storage::exists($imagePath)) {
             Storage::delete($imagePath);
         }
     
-        Image::find($id)->delete();
+        Images::find($id)->delete();
         return back();
     }
 
     public function destroy($id) {
         $post = Post::findOrFail($id);
         
-        $images = Image::where("post_id", $post->id)->get();
+        $images = Images::where("post_id", $post->id)->get();
         
         foreach ($images as $image) {
             $imagePath = 'public/post-img/' . $image->image;
@@ -228,6 +229,23 @@ class Postcontroller extends Controller
         $request->session()->forget('search');
         $fileName = 'Laporan_' . Carbon::now()->format('Ymd') . '.xlsx';
         return (new LaporanExport($search))->download($fileName);
+    }
+
+    public function rotate(Request $request)
+    {
+        $imagePath = 'public/post-img/' . $request->image;
+        $fullImagePath = storage_path('app/' . $imagePath);
+
+        if (!Storage::exists($imagePath)) {
+            abort(404, 'Image not found');
+        }
+
+        $image = Image::make($fullImagePath);
+        $image->rotate(-90);
+
+        $image->save($fullImagePath);
+
+        return back()->with('success', 'Image rotated successfully');
     }
 
    public function apiSnomed(Request $request)

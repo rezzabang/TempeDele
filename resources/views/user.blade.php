@@ -25,9 +25,9 @@
                                     @foreach ($users as $user)
                                     <tr>
                                         <th scope="row">{{ $user->name }}</th>
-                                        <td><a href="/edituser/{{ $user->id }}" class="btn btn-outline-primary justify-content-center">Edit</a></td>
+                                        <td><a href="{{ route('edituser',['id' => $user->id ]) }}" class="btn btn-outline-primary justify-content-center">Edit</a></td>
                                         <td>
-                                            <form action="/deleteuser/{{ $user->id }}" method="post">
+                                            <form action="{{ route('deleteuser', ['id'=>$user->id])}}" method="post">
                                                 <button class="btn btn-outline-danger justify-content-center" onclick="return confirm('Are you sure?');" type="submit">Delete</button>
                                                 @csrf
                                                 @method('delete')

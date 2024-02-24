@@ -26,7 +26,7 @@ class AuthController extends Controller
         return view('register');
     }
 
-    public function registerPost(Request $request)
+    public function registerUser(Request $request)
     {
         $request->validate([
             'username' => [

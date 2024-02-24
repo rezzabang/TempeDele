@@ -15,7 +15,7 @@
                             @endforeach
                     </div>
                 @endif
-                <form action="/updateuser/{{ $users->id }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('updateuser',['id' => $users->id])}}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method("put")
                     <div class="d-flex flex-column align-items-center">

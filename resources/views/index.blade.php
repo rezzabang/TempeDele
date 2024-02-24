@@ -18,7 +18,7 @@
             <div class="card-body row mb-4">
                 <div class="col-8 offset-2 text-center">
                     <div class="form-group">
-                        <form method="get" action="/search">
+                        <form method="get" action="{{ route('search')}}">
                             <div class="input-group">
                                 <input class="form-control" name="search" placeholder="Ketik untuk mencari..." value="{{ isset($search) ? $search : ''}}" required>
                                 <button type="submit" class="btn btn-primary">Cari</button>
