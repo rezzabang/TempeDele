@@ -7,6 +7,18 @@
 <a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
 </p>
 
+## Installing
+
+- Clone this repo.
+- Install required things with composer.
+- Create some mysql database.
+- Rename & edit <code>.env</code> with your database configuration.
+- run <code>php artisan db:seed</code>.
+- run <code>php artisan storage:link</code>.
+- Last, use it wisely.
+  <strong>PS:</strong> Default username: mamang
+      Default password: @Rezzabang1
+
 ## About Laravel
 
 Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
