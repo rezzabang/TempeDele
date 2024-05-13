@@ -1,32 +1,3 @@
-   $('.pop').ready(function() {
-        const previewImages = document.querySelectorAll('.preview-image');
-        const modalImage = document.querySelector('.modal-body .imagepreview');
-        const imgpath = document.querySelector('.modal-body .imagepath');
-
-        previewImages.forEach(image => {
-            image.addEventListener('click', function(event) {
-                event.stopPropagation();
-                const imageUrl = this.getAttribute('src');
-                const imageName = imageUrl.split('/').pop();
-                imgpath.value = imageName;
-                modalImage.setAttribute('src', imageUrl);
-                $('#imagemodal').modal('show');
-                });
-            });
-    });
-
-    const waveButtons = document.querySelectorAll('.wave-effect');
-    
-    waveButtons.forEach((button) => {
-        button.addEventListener('mouseenter', () => {
-            button.style.animationPlayState = 'paused';
-        });
-
-        button.addEventListener('mouseleave', () => {
-            button.style.animationPlayState = 'running';
-        });
-    });
-    
     $(document).ready(function() {
         let fileInputCount = 1;
         const limitResults = 10;
@@ -201,4 +172,46 @@
             const selectedValue = $(this).val();
             toggleVisibility(selectedValue);
         });
+
+           const waveButtons = document.querySelectorAll('.wave-effect');
+
+    waveButtons.forEach((button) => {
+        button.addEventListener('mouseenter', () => {
+            button.style.animationPlayState = 'paused';
+        });
+
+        button.addEventListener('mouseleave', () => {
+            button.style.animationPlayState = 'running';
+        });
+    });
+
+    const viewImg = document.querySelectorAll('.preview-image');
+    const imageUrls = Array.from(viewImg).map(image => image.getAttribute('src'));
+    const imgpath = document.querySelector('.modal-body .imagepath');
+
+    let currentIndex = 0;
+
+    function updateImagePreview() {
+        const imageUrl = imageUrls[currentIndex];
+        const imageName = imageUrl.split('/').pop();
+        imgpath.value = imageName;
+        $('.imagepreview').attr('src', imageUrl);
+    }
+
+    $('#prevBtn').on('click', function() {
+        currentIndex = (currentIndex - 1 + imageUrls.length) % imageUrls.length;
+        updateImagePreview();
+    });
+
+    $('#nextBtn').on('click', function() {
+        currentIndex = (currentIndex + 1) % imageUrls.length;
+        updateImagePreview();
+    });
+
+    $('.preview-image').on('click', function() {
+        $('#imagemodal').modal('show');
+        currentIndex = Array.from(viewImg).findIndex(image => image === this);
+        updateImagePreview();
+    });
+
     });

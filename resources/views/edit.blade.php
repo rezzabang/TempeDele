@@ -4,7 +4,7 @@
 <div class="row justify-content-center">
     <div class="col-10">
         <div class="card">
-            <div class="card-header">
+            <div class="card-header  text-center">
                 <h2>Edit Dokumen Terupload</h2>
             </div>
             <div class="text-center">
@@ -31,8 +31,10 @@
                                     <form action="{{ route('rotate')}}" method="post">
                                         @csrf
                                         <input class= "imagepath" type="hidden" name="image" value="" id="imgpath">
-                                        <button class="btn btn-sm btn-primary mt-2" type="submit">Rotate 90°</button>
+                                        <button class="btn btn-lg btn-primary mt-2" type="submit">Rotate 90°</button>
                                     </form>
+				    <button type="button" class="btn btn-outline-dark btn-lg position-absolute top-50 start-0 translate-middle-y" style="z-index: 1050;" id="prevBtn"><</button>
+				    <button type="button" class="btn btn-outline-dark btn-lg position-absolute top-50 end-0 translate-middle-y" style="z-index: 1050;" id="nextBtn">></button>
                                     <button type="button" class="btn-close position-absolute top-0 end-0 m-1" style="z-index: 1050;" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                             </div>
@@ -196,8 +198,10 @@
                             </div>
                         </div>
                     </div>
-                    <button type="submit" class="btn btn-success m-2 ">Submit</button>
-                    <a class="btn btn-secondary m-2" href="{{ url()->previous() }}" role="button">Batal</a>
+                    <div class="col-md-4 mx-auto text-center">
+                        <button type="submit" class="btn btn-success mb-2 mr-2">Submit</button>
+                        <a class="btn btn-secondary  mb-2 mr-2" href="{{ url()->previous() }}" role="button">Batal</a>
+                    </div>
                 </form>
             </div>
         </div>
