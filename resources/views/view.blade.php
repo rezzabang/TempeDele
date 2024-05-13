@@ -21,6 +21,9 @@
                             <div class="modal-content">
                                 <div class="modal-body">
                                     <img src="{{ asset('storage/post-img/'. $img->image) }}" class="imagepreview" style="width: 100%;" >
+                                    <input class="imagepath" type="hidden" name="image" value="" id="imgpath">
+                                    <button type="button" class="btn btn-outline-dark btn-lg position-absolute top-50 start-0 translate-middle-y" style="z-index: 1050;" id="prevBtn"><</button>
+                                    <button type="button" class="btn btn-outline-dark btn-lg position-absolute top-50 end-0 translate-middle-y" style="z-index: 1050;" id="nextBtn">></button>
                                     <button type="button" class="btn-close position-absolute top-0 end-0 m-1" style="z-index: 1050;" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                             </div>
@@ -42,7 +45,9 @@
                     <input type="text" name="diagnosa" class="form-control m-2" placeholder="Diagnosa" value="{{ $posts->diagnosa }}" readonly>
                     <label class="m-1" for="user">Petugas:</label>
                     <input type="text" name="user" class="form-control m-2" placeholder="" value="{{ $posts->user }}" readonly>
-                    <a class="btn btn-secondary m-2" href="{{ url()->previous() }}" role="button">Kembali</a>
+                    <div class="col-md-4 mx-auto text-center">
+                        <a class="btn btn-secondary  mb-2 mr-2" href="{{ url()->previous() }}" role="button">Kembali</a>
+                    </div>
                 </form>
             </div>
         </div>

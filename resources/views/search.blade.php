@@ -27,25 +27,25 @@
                             <table class="table">
                                 <thead>
                                     <tr>
-                                    <th>No CM</th>
-                                    <th>Nama</th>
-                                    <th>Tanggal Kunjungan</th>
-                                    <th>Pelayanan</th>
-                                    <th>User</th>
-                                    <th>Update</th>
-                                    <th>Delete</th>
+                                    <th class="mx-auto text-center">No. RM</th>
+                                    <th class="mx-auto text-center">Nama Pasien</th>
+                                    <th class="mx-auto text-center">Tanggal Kunjungan</th>
+                                    <th class="mx-auto text-center">Jenis Pelayanan</th>
+                                    <th class="mx-auto text-center">User</th>
+                                    <th class="mx-auto text-center">Update</th>
+                                    <th class="mx-auto text-center">Delete</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     @foreach ($posts as $post)
                                     <tr>
-                                        <th scope="row"><a href="/view/{{ $post->id }}">{{ $post->nocm }}</a></th>
-                                        <td>{{ $post->nama }}</td>
-                                        <td>{{ $post->kunjungan }}</td>
-                                        <td>{{ $post->pelayanan }}</td>
-                                        <td>{{ $post->user }}</td>
-                                        <td><a href="/edit/{{ $post->id }}" class="btn btn-outline-primary">Edit</a></td>
-                                        <td>
+                                        <th scope="row" class="mx-auto text-center"><a href="/view/{{ $post->id }}">{{ $post->nocm }}</a></th>
+                                        <td class="mx-auto text-center">{{ $post->nama }}</td>
+                                        <td class="mx-auto text-center">{{ $post->kunjungan }}</td>
+                                        <td class="mx-auto text-center">{{ $post->pelayanan }}</td>
+                                        <td class="mx-auto text-center">{{ $post->user }}</td>
+                                        <td class="mx-auto text-center"><a href="/edit/{{ $post->id }}" class="btn btn-outline-primary">Edit</a></td>
+                                        <td class="mx-auto text-center">
                                             <form action="{{ route('delete', ['id' => $post->id])}}" method="post">
                                                 <button class="btn btn-outline-danger" onclick="return confirm('Are you sure?');" type="submit">Delete</button>
                                                 @csrf
@@ -61,13 +61,13 @@
                     @endif
                 </div>
             </div>
-            <div class="row justify-content-between">
-                <div class="col-md-4 mx-auto text-center mb-2">
+            <div class="d-flex justify-content-between">
+                <div class="col-md-8 mx-auto text-center mb-1">
                     {{ $posts->links() }}
                 </div>
-                <div class="col-md-4 mx-auto text-center">
-                    <a class="btn btn-success mb-2 mr-2" href="{{url('exportLaporan')}}">Export Laporan</a>
-                </div>
+            </div>
+            <div class="col-md-4 mx-auto text-center">
+                <a class="btn btn-success mb-2 mr-2" href="{{url('exportLaporan')}}">Export Laporan</a>
             </div>
         </div>
     </div>

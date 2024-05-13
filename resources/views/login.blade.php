@@ -28,7 +28,7 @@
                         </div>
                         <div class="mb-3 form-group">
                             <label for="password" class="form-label">Password</label>
-                            <input type="password" name="password" class="form-control" id="password" required>
+                            <input type="password" name="password" class="form-control" id="password" placeholder="Password" required>
                         </div>
                         <div class="mb-3 form-group">
                             <label for="captcha">Captcha</label>

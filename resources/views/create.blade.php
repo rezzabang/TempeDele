@@ -1,5 +1,5 @@
 @extends('layout')
-     
+
 @section('content')
 <div class="row justify-content-center">
     <div class="col-10">
@@ -161,11 +161,13 @@
                                 </div>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-success mt-3">Submit</button>
-                        <a class="btn btn-secondary mt-3" href="/" role="button">Batal</a>
+                        <div class="col-md-4 mx-auto text-center">
+                            <button type="submit" class="btn btn-success mb-2 mr-2">Submit</button>
+                            <a class="btn btn-secondary mb-2 mr-2" href="/" role="button">Batal</a>
+                        </div>
                 </form>
-            </div>                  
+            </div>
         </div>
-    </div>                        
+    </div>
 </div>
 @endsection
