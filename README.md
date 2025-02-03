@@ -14,6 +14,7 @@
 - Run <code>composer install</code>.
 - Create some mysql database.
 - Rename <code>.env.example</code> to <code>.env</code> then edit DB section with your database configuration.
+- Run <code>php artisan migrate</code>.
 - Run <code>php artisan db:seed</code>.
 - Run <code>php artisan storage:link</code>.
 - Last, use it wisely.
