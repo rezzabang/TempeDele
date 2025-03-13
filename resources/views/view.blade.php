@@ -12,7 +12,11 @@
                     <div class="d-flex flex-wrap justify-content-center align-items-center mt-2">
                         @foreach ($posts->images as $img)
                             <div class="pop m-2 text-center">
-                                <img src="{{ asset('storage/post-img/' . $img->image) }}" class="img-responsive preview-image" style="max-height: 100px; max-width: 100px;" alt="">
+                                @php
+                                    $imagePath = public_path('storage/post-img/' . $img->image);
+                                    $imageUrl = file_exists($imagePath) ? asset('storage/post-img/' . $img->image) : asset('storage/post-img/default.png');
+                                @endphp
+                                <img src="{{ $imageUrl }}" class="img-responsive preview-image" style="max-height: 100px; max-width: 100px;" alt="">
                             </div>
                         @endforeach
                     </div>
@@ -20,16 +24,19 @@
                         <div class="modal-dialog">
                             <div class="modal-content">
                                 <div class="modal-body">
-                                    <img src="{{ asset('storage/post-img/'. $img->image) }}" class="imagepreview" style="width: 100%;" >
-				    <input class= "imagepath" type="hidden" name="image" value="" id="imgpath">
-				    <button type="button" class="btn btn-outline-dark btn-lg position-absolute top-50 start-0 translate-middle-y" style="z-index: 1050;" id="prevBtn"><</button>
+                                    @php
+                                        $modalImageUrl = file_exists($imagePath) ? asset('storage/post-img/' . $img->image) : asset('storage/post-img/default.png');
+                                    @endphp
+                                    <img src="{{ $modalImageUrl }}" class="imagepreview" style="width: 100%;">
+                                    <input class="imagepath" type="hidden" name="image" value="" id="imgpath">
+                                    <button type="button" class="btn btn-outline-dark btn-lg position-absolute top-50 start-0 translate-middle-y" style="z-index: 1050;" id="prevBtn"><</button>
                                     <button type="button" class="btn btn-outline-dark btn-lg position-absolute top-50 end-0 translate-middle-y" style="z-index: 1050;" id="nextBtn">></button>
                                     <button type="button" class="btn-close position-absolute top-0 end-0 m-1" style="z-index: 1050;" data-bs-dismiss="modal" aria-label="Close"></button>
                                 </div>
                             </div>
                         </div>
                     </div>
-               @endif
+                @endif
             </div>
             <div class="card-body">
                 <form>
