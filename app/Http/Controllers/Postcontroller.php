@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Facades\Http;
 use Intervention\Image\Facades\Image;
 
 
@@ -240,5 +241,41 @@ class Postcontroller extends Controller
         $image->save($fullImagePath);
 
         return back()->with('success', 'Image rotated successfully');
+    }
+
+    public function apiSnomed($searchTerm)
+    {
+        $apiUrl = config('services.apiSnomed.url');
+        $urlTerm = $apiUrl."MAIN/concepts?activeFilter=true&term=".$searchTerm."&termActive=true&includeLeafFlag=false&form=inferred&offset=0&limit=7";
+        $responseTerm = Http::get($urlTerm);
+
+        if ($responseTerm->successful() && !empty($responseTerm->json()['items'])) {
+            return response()->json([
+                'source' => 'concepts',
+                'items' => collect($responseTerm->json()['items'])->map(function ($item) {
+                    return [
+                        'fsn_term' => $item['fsn']['term'],
+                        'sctid' => $item['conceptId'],
+                    ];
+                }),
+            ]);
+        }
+
+        $urlIcd = $apiUrl."MAIN/members?referenceSet=447562003&active=true&mapTarget=".$searchTerm."&limit=7";
+        $responseIcd = Http::get($urlIcd);
+
+        if ($responseIcd->successful() && !empty($responseIcd->json()['items'])) {
+            return response()->json([
+                'source' => 'members',
+                'items' => collect($responseIcd->json()['items'])->map(function ($item) {
+                    return [
+                        'fsn_term' => $item['referencedComponent']['fsn']['term'],
+                        'sctid' => $item['referencedComponent']['conceptId'],
+                    ];
+                }),
+            ]);
+        }
+
+        return response()->json(['items' => []]);
     }
 }

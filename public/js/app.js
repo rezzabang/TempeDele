@@ -1,7 +1,6 @@
 $(document).ready(function() {
     let fileInputCount = 1;
-    const apiUrlBase = "https://uts-ws.nlm.nih.gov/rest/search/current";
-    const limitResults = 10;
+    const apiUrlBase = "/apiSnomed/";
     let typingTimeout;
     const pelayananSelect = $('#pelayananSelect');
     const ranapToggle = $('.toggle-ranap');
@@ -36,37 +35,36 @@ $(document).ready(function() {
     });
 
     function fetchDiagnosaList(searchTerm) {
-        const apiUrl = `${apiUrlBase}?apiKey=${apiKey}&string=${searchTerm}&sabs=SNOMEDCT_US&returnIdType=code`;
-        console.log(apiUrl);
+        const apiUrl = `${apiUrlBase}${searchTerm}`;
         $.ajax({
             url: apiUrl,
             method: "GET",
             success: function (data) {
-            const diagnosaResults = $("#diagnosaResults");
-            diagnosaResults.empty();
+                const diagnosaResults = $("#diagnosaResults");
+                diagnosaResults.empty();
 
-            if (data.result.results.length > 0) {
-                for (let i = 0; i < Math.min(data.result.results.length, limitResults); i++) {
-                const item = data.result.results[i];
-                const diagnosaItem = $("<a>", {
-                    href: "#",
-                    class: "list-group-item list-group-item-action",
-                    text: item.name,
-                    "data-sctid": item.ui,
-                });
-                diagnosaResults.append(diagnosaItem);
+                if (data.items.length > 0) {
+                    data.items.forEach(item => {
+                        const diagnosaItem = $("<a>", {
+                            href: "#",
+                            class: "list-group-item list-group-item-action",
+                            text: item.fsn_term,
+                            "data-sctid": item.sctid,
+                        });
+
+                        diagnosaResults.append(diagnosaItem);
+                    });
+
+                    diagnosaResults.show();
+                } else {
+                    diagnosaResults.hide();
                 }
-                diagnosaResults.show();
-            } else {
-                diagnosaResults.hide();
-            }
             },
             error: function () {
-                const diagnosaResults = $("#diagnosaResults");
-                diagnosaResults.hide();
+                $("#diagnosaResults").hide();
             },
         });
-        }
+    }
 
         $("#diagnosaInput").on("input", function () {
             const searchTerm = $(this).val();
