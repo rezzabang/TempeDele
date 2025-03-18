@@ -37,5 +37,8 @@ return [
     'snomed' => [
         'api_key' => env('SNOMED_API_KEY'),
     ],
+    'apiSnomed' => [
+        'url' => env('API_SNOMED_URL'),
+    ],
 
 ];

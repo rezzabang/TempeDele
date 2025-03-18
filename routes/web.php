@@ -39,6 +39,6 @@ Route::group(['middleware' => 'auth'], function () {
     Route::delete('/deleteuser/{id}',[\App\Http\Controllers\AuthController::class,'deleteuser'])->name('deleteuser');
     Route::put('/updateuser/{id}',[\App\Http\Controllers\AuthController::class,'updateuser'])->name('updateuser');
     Route::get('/exportLaporan',[\App\Http\Controllers\Postcontroller::class,'exportLaporan'])->name('exportLaporan');
-    Route::get('/apiSnomed',[\App\Http\Controllers\Postcontroller::class,'apiSnomed'])->name('apiSnomed');
+    Route::get('/apiSnomed/{searchterm}',[\App\Http\Controllers\Postcontroller::class,'apiSnomed'])->name('apiSnomed');
     Route::post('/rotate',[\App\Http\Controllers\Postcontroller::class,'rotate'])->name('rotate');
 });

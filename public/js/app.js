@@ -1,7 +1,5 @@
     $(document).ready(function() {
         let fileInputCount = 1;
-        const limitResults = 10;
-	const apiUrlBase = "/apiSnomed";
         let typingTimeout;
         const pelayananSelect = $('#pelayananSelect');
         const ranapToggle = $('.toggle-ranap');
@@ -36,39 +34,41 @@
         });
 
         function fetchDiagnosaList(searchTerm) {
-	    const apiUrl = `${apiUrlBase}?diagnosa=${searchTerm}`;
-            $.ajax({
-                url: apiUrl,
-                method: "GET",
-                success: function(data) {
-                        const diagnosaResults = $("#diagnosaResults");
-                        diagnosaResults.empty();
-        
-                        if (data.result.results.length > 0) {
-                            for (let i = 0; i < Math.min(data.result.results.length, limitResults); i++) {
-                                const item = data.result.results[i];
-                                const diagnosaItem = $("<a>", {
-                                    href: "#",
-                                    class: "list-group-item list-group-item-action",
-                                    text: item.name,
-                                    "data-sctid": item.ui,
-                                });
-                                diagnosaResults.append(diagnosaItem);
-                            }
-                            diagnosaResults.show();
-                        } else {
-                            diagnosaResults.hide();
-                        }
-                    },
-                    error: function() {
-                        const diagnosaResults = $("#diagnosaResults");
-                        diagnosaResults.hide();
-                    },
-            });
+        const apiUrl = `/apiSnomed/${encodeURIComponent(searchTerm)}`;
+	console.log(apiUrl);
+        $.ajax({
+            url: apiUrl,
+            method: "GET",
+            success: function (data) {
+                const diagnosaResults = $("#diagnosaResults");
+                diagnosaResults.empty();
+
+                if (data.items.length > 0) {
+                    data.items.forEach(item => {
+                        const diagnosaItem = $("<a>", {
+                            href: "#",
+                            class: "list-group-item list-group-item-action",
+                            text: item.fsn_term,
+                            "data-sctid": item.sctid,
+                        });
+
+                        diagnosaResults.append(diagnosaItem);
+                    });
+
+                    diagnosaResults.show();
+                } else {
+                    diagnosaResults.hide();
+                }
+            },
+            error: function () {
+                $("#diagnosaResults").hide();
+            },
+        });
         }
         
         $("#diagnosaInput").on("input", function () {
-            const searchTerm = $(this).val();
+            let searchTerm = $(this).val().toUpperCase();
+            $(this).val(searchTerm);
             if (searchTerm === '') {
             $("#sctidInput").val('null');
             $("#diagnosaResults").hide();
