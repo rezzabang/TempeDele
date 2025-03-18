@@ -67,7 +67,8 @@ $(document).ready(function() {
     }
 
         $("#diagnosaInput").on("input", function () {
-            const searchTerm = $(this).val();
+            let searchTerm = $(this).val().toUpperCase();
+            $(this).val(searchTerm);
             if (searchTerm === '') {
             $("#sctidInput").val('null');
             $("#diagnosaResults").hide();
