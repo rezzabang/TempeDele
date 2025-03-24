@@ -121,7 +121,7 @@
                             </div>
                         </div>
                     </div>
-                    <label class="m-1 toggle-igd" for="sklIgd" id="sklIgd">Lembar Kematian:</label>
+                    <label class="m-1 toggle-igd" for="sklIgd" id="sklIgd">Surat Keterangan Lahir:</label>
                     <div id="sklIgdInput" class="m-2 toggle-igd">
                         <div class="row">
                             <div class="col-8">
